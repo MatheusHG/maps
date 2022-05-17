@@ -38,7 +38,7 @@ export function SideBar() {
     const queryString = FiltersService.generateQueryString(
       filterValues?.current,
     );
-    const sql = FiltersService.generateSQL(queryString);
+    // const sql = FiltersService.generateSQL(queryString);
 
     const response = await FiltersService.searchByFilters(queryString);
     setSchools(response);
@@ -66,6 +66,7 @@ export function SideBar() {
         setCities(citiesLocations);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceUpdate, states]);
 
   const filters = useMemo(
