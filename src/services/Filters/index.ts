@@ -25,7 +25,6 @@ class FiltersService implements IFilterService {
         const value = filterValues[column].value as RangeItemProps;
         return `filter[${column}][lt]=${value.gt}&filter[${column}][gt]=${value.lt}&`;
       }
-      console.log('filter -> ', filterValues[column]);
       if (filterValues[column].type === VALUE_TYPE.CHECKBOX) {
         const values = filterValues[column].value as CheckboxItemProps[];
         return values
@@ -50,7 +49,9 @@ class FiltersService implements IFilterService {
   }
 
   async getAllFilters() {
+    console.log('entrou');
     const { data } = await api.get('maps/filters');
+    console.log('resposta', data);
     return data;
   }
 
