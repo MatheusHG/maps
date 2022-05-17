@@ -55,6 +55,7 @@ class FiltersService implements IFilterService {
 
   async searchByFilters(queryString: string) {
     const { data } = await api.post<SchoolProps[]>('maps', { queryString });
+
     return data;
   }
 }

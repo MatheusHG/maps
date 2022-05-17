@@ -6,7 +6,7 @@ import { SchoolContainer, PopupContainer, InfoPopupContainer } from './styles';
 
 export interface SchoolProps {
   latitude: number;
-  longitude: string | number;
+  longitude: number;
   ideb_2019: number;
   nivel_servico: number;
   custos: number;

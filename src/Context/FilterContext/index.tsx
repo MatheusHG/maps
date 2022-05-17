@@ -29,10 +29,24 @@ import {
   VALUE_TYPE,
 } from './types';
 
+export interface PropsViewport {
+  initialViewState: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  style: {
+    width: string;
+    height: string;
+  };
+}
+
 interface FilterContextProps {
   filterValues: MutableRefObject<FilterValues>;
   schools: SchoolProps[];
   setSchools: (schools: SchoolProps[]) => void;
+  viewport: PropsViewport;
+  setViewport: React.Dispatch<React.SetStateAction<PropsViewport>>;
   clearFilters: () => void;
   forceUpdate: boolean;
   onChangeFilterValue(
@@ -56,6 +70,17 @@ const FilterContext = createContext({} as FilterContextProps);
 function FilterProvider({ children }: FilterProviderProps) {
   const [forceUpdate, handleForceUpdate] = useReducer((prev) => !prev, false);
   const [schools, setSchools] = useState<SchoolProps[]>([]);
+  const [viewport, setViewport] = useState<PropsViewport>({
+    initialViewState: {
+      latitude: -15.8400953,
+      longitude: -48.0408881,
+      zoom: 10,
+    },
+    style: {
+      width: '100%',
+      height: '100vh',
+    },
+  });
 
   const filterValues = useRef<FilterValues>({} as FilterValues);
 
@@ -128,6 +153,8 @@ function FilterProvider({ children }: FilterProviderProps) {
       value={{
         schools,
         setSchools,
+        viewport,
+        setViewport,
         clearFilters,
         filterValues,
         forceUpdate,

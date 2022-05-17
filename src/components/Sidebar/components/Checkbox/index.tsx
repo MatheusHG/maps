@@ -25,7 +25,7 @@ export function Checkbox(props: CheckboxProps) {
     let checkedValues = [];
 
     const values =
-      (filterValues?.current?.[column]?.id as CheckboxItemProps[]) || [];
+      (filterValues?.current?.[column]?.value as CheckboxItemProps[]) || [];
 
     if (!event.target.checked) {
       checkedValues = values.filter((checkbox) => checkbox.id !== id);

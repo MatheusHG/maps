@@ -5,6 +5,7 @@ import { BiArrowFromRight } from 'react-icons/bi';
 import { getCities, getStates, IStates, ICities } from '@services/City/index';
 import FiltersService from '@services/Filters';
 
+import { PropsViewport } from '@contexts/FilterContext';
 import { Filters } from '@contexts/FilterContext/types';
 
 import { useFilterContext } from '@hooks/useFilterContext';
@@ -24,13 +25,20 @@ interface FiltersMaps {
 
 export function SideBar() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [firstFilter, setFirstFilter] = useState<boolean>(true);
   const [states, setStates] = useState<IStates[]>([]);
   const [cities, setCities] = useState<ICities[]>([]);
 
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
 
-  const { filterValues, forceUpdate, renderFilters, setSchools, clearFilters } =
-    useFilterContext();
+  const {
+    filterValues,
+    forceUpdate,
+    renderFilters,
+    setSchools,
+    clearFilters,
+    setViewport,
+  } = useFilterContext();
 
   async function handleConfirmFilterValues() {
     if (!filterValues.current.municipio) return;
@@ -41,6 +49,40 @@ export function SideBar() {
     // const sql = FiltersService.generateSQL(queryString);
 
     const response = await FiltersService.searchByFilters(queryString);
+    const initialValue = 0;
+
+    function calcLat() {
+      const latitude = response.reduce(
+        (previousValue, currentValue) =>
+          previousValue + currentValue.latitude / response.length,
+        initialValue,
+      );
+
+      return latitude;
+    }
+
+    function calcLong() {
+      const longitude = response.reduce(
+        (previousValue, currentValue) =>
+          previousValue + currentValue.longitude / response.length,
+        initialValue,
+      );
+
+      return longitude;
+    }
+
+    setViewport(
+      (prevState) =>
+        ({
+          ...prevState,
+          initialViewState: {
+            latitude: calcLat(),
+            longitude: calcLong() - 0.1,
+            zoom: 10,
+          },
+        } as PropsViewport),
+    );
+    setFirstFilter(false);
     setSchools(response);
   }
 
