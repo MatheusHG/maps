@@ -12,6 +12,8 @@ interface CommumValue {
 }
 
 interface SelectValue extends CommumValue {
+  // eslint-disable-next-line no-use-before-define
+  id: CheckboxItemProps[];
   value: string;
 }
 
@@ -21,6 +23,8 @@ export interface RangeItemProps {
 }
 
 interface RangeValue extends CommumValue {
+  // eslint-disable-next-line no-use-before-define
+  id: CheckboxItemProps[];
   value: RangeItemProps;
 }
 
@@ -30,6 +34,7 @@ export interface CheckboxItemProps {
 }
 
 interface CheckboxValue extends CommumValue {
+  id: CheckboxItemProps[];
   value: CheckboxItemProps[];
 }
 
@@ -57,7 +62,7 @@ export interface CommumProps {
 
 export interface SelectProps extends CommumProps {
   items: ICities[] | IStates[];
-  labelProp: string;
+  labelProp: string | number;
   small?: boolean;
   placeholder?: string;
   shouldForceUpdate?: boolean;

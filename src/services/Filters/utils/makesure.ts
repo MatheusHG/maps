@@ -1,6 +1,6 @@
 import qs from 'qs';
 
-export const translate = function (params) {
+export const translate = function (params: any) {
   const toReturn = {};
 
   let parsedQuery;
@@ -125,18 +125,18 @@ export const translate = function (params) {
 
   return false;
 };
-function isNumber(n) {
+function isNumber(n: any) {
   return !isNaN(parseFloat(n)) && !isNaN(n - 0);
 }
 
-function escapeForSQL(input) {
+function escapeForSQL(input: any) {
   if (isNumber(input)) {
     return input;
   }
   return `\`${input.replace('`', '`')}\``;
 }
 
-function buildSQL(easy) {
+function buildSQL(easy: any) {
   let sqlQuery = 'SELECT ';
   let fromVal = '*';
 

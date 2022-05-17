@@ -71,7 +71,6 @@ function FilterProvider({ children }: FilterProviderProps) {
         type,
       },
     };
-    console.log('filterValues -> ', filterValues.current);
   }
 
   function createSelects(selectsObject: SelectProps[]) {

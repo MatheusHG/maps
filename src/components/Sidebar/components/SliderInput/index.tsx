@@ -1,9 +1,10 @@
 import React, { ChangeEvent, Dispatch } from 'react';
 
-import { ValuePropsName, ValuesProps } from '@contexts/FilterContext';
+// import { ValuePropsName, ValuesProps } from '@contexts/FilterContext';
 
 import { formatNumber } from '@utils/dataFunctions';
 
+import { Box } from '../Box';
 import {
   Container,
   SliderContainer,
@@ -12,14 +13,13 @@ import {
   InputText,
   ContentFilter,
 } from './style';
-import { Box } from '../Box';
 
 interface SliderProps {
-  name: ValuePropsName;
+  name: string;
   label: string;
   min: number;
   max: number;
-  setValue: Dispatch<React.SetStateAction<ValuesProps>>;
+  setValue: Dispatch<React.SetStateAction<string>>;
   value: number;
   shouldFormatLabels?: boolean;
 }
@@ -28,7 +28,7 @@ export function SliderInput(props: SliderProps) {
   const { name, label, min, max, setValue, value, shouldFormatLabels } = props;
 
   function handleChangeValue(event: ChangeEvent<HTMLInputElement>) {
-    setValue((prevState) => ({
+    setValue((prevState: any) => ({
       ...prevState,
       [name]: Number(event.target.value),
     }));

@@ -1,5 +1,7 @@
 import React, { ChangeEvent } from 'react';
 
+import { ICities } from '@services/City';
+
 import {
   MultipleSelectsProps,
   SelectProps,
@@ -44,7 +46,7 @@ export function Select(props: SelectProps) {
         onChange={handleSelect}
       >
         <option value="">{placeholder}</option>
-        {items?.map((item) => (
+        {items?.map((item: any) => (
           <option key={item.id} value={item[labelProp]}>
             {item[labelProp]}
           </option>
@@ -57,7 +59,7 @@ export function Select(props: SelectProps) {
     <Box label={title}>
       <SelectElement small={small} onChange={handleSelect}>
         <option value="">{placeholder}</option>
-        {items?.map((item) => (
+        {items?.map((item: any) => (
           <option key={item.id} value={item[labelProp]}>
             {item[labelProp]}
           </option>
