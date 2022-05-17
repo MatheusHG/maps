@@ -21,6 +21,9 @@ export const SchoolContainer = styled.div`
 export const PopupContainer = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: 42rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   img {
     object-fit: cover;

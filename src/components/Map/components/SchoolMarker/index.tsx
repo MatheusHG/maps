@@ -2,17 +2,29 @@ import { useState } from 'react';
 import { AiTwotoneCompass } from 'react-icons/ai';
 import { Marker, Popup } from 'react-map-gl';
 
+import { useFilterContext } from '@hooks/useFilterContext';
+
 import { SchoolContainer, PopupContainer, InfoPopupContainer } from './styles';
 
 export interface SchoolProps {
+  '2019_ideb_1_5': string;
+  '2019_ideb_6_9': string;
+  '2019_ideb_em': string;
+  adesao: number;
+  atendimento: number;
+  caracteristica: number;
+  codigo_uf: string;
+  custo: string;
+  dependencia: number;
+  escola: string;
+  etapas: number;
+  evid_audit: string;
   latitude: number;
+  localizacao: number;
   longitude: number;
-  ideb_2019: number;
-  nivel_servico: number;
-  custos: number;
-  valor: number;
-  nome: string;
-  indice: number;
+  municipio: string;
+  nivel_serv_comparado: string;
+  porte: number;
   image: string;
 }
 
@@ -22,6 +34,8 @@ interface Props {
 }
 
 export function SchoolMarker(props: Props) {
+  const { allFilters } = useFilterContext();
+
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const { school, showName } = props;
 
@@ -49,31 +63,61 @@ export function SchoolMarker(props: Props) {
             alt="schoolImage"
           />
 
-          <h2>{school.nome}</h2>
+          <h2>{school.escola || 'Sem informação'}</h2>
 
           <InfoPopupContainer>
-            <span>Info</span>
-            <p>Olá mundo</p>
+            <span>Evidência auditável</span>
+            <p>{school.evid_audit || 'Sem informação'}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Custo total</span>
-            {formatCurrency(school.custos)}
-          </InfoPopupContainer>
-
-          <InfoPopupContainer>
-            <span>Valor total</span>
-            {formatCurrency(school.valor)}
+            {formatCurrency(Number(school.custo))}
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Nível de serviço</span>
-            <p>{school.nivel_servico}</p>
+            <p>{school.nivel_serv_comparado || 'Sem informação'}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Ideb 2019</span>
-            <p>{school.ideb_2019}</p>
+            <p>{school['2019_ideb_em'] || 'Sem informação'}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Categoria Administrativa</span>
+            <p>{allFilters?.dependencia[school.dependencia].name}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Localização</span>
+            <p>{allFilters?.localizacao[school.localizacao].name}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Etapas e Modalidade</span>
+            <p>{allFilters?.etapas[school.etapas].name}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Porte de Matrícula</span>
+            <p>{allFilters?.porte[school.porte].name}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Restrição de Atendimentoa</span>
+            <p>{allFilters?.atendimento[school.atendimento].name}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Localidade Diferenciada</span>
+            <p>{allFilters?.caracteristica[school.caracteristica].name}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
+            <span>Adesão</span>
+            <p>{allFilters?.adesao[school.adesao].name}</p>
           </InfoPopupContainer>
         </PopupContainer>
       </Popup>
@@ -85,7 +129,7 @@ export function SchoolMarker(props: Props) {
       return null;
     }
 
-    return <small> {school.nome}</small>;
+    return <small> {school.escola}</small>;
   }
 
   return (

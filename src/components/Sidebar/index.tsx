@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import React, { useEffect, useMemo, useState } from 'react';
 import { BiArrowFromRight } from 'react-icons/bi';
 
@@ -13,24 +12,13 @@ import { useFilterContext } from '@hooks/useFilterContext';
 import { Header } from './components/Header';
 import { Container, Content, CloseLabel } from './style';
 
-interface FiltersMaps {
-  dependencia: Object;
-  localizacao: Object;
-  etapas: Object;
-  porte: Object;
-  atendimento: Object;
-  caracteristica: Object;
-  adesao: Object;
-}
-
 export function SideBar() {
+  const { allFilters, setAllFilters } = useFilterContext();
+
   const [isOpen, setIsOpen] = useState<boolean>(true);
   // const [firstFilter, setFirstFilter] = useState<boolean>(true);
   const [states, setStates] = useState<IStates[]>([]);
   const [cities, setCities] = useState<ICities[]>([]);
-
-  const [allFilters, setAllFilters] = useState<FiltersMaps>();
-
   const {
     filterValues,
     forceUpdate,
@@ -49,7 +37,6 @@ export function SideBar() {
     // const sql = FiltersService.generateSQL(queryString);
 
     const response = await FiltersService.searchByFilters(queryString);
-
     const initialValueLat = 0;
     function calcLat() {
       const latitude = response.reduce(

@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable camelcase */
 import {
   createContext,
+  Dispatch,
   DispatchWithoutAction,
   MutableRefObject,
   ReactNode,
+  SetStateAction,
   useReducer,
   useRef,
   useState,
@@ -41,12 +44,24 @@ export interface PropsViewport {
   };
 }
 
+interface FiltersMaps {
+  dependencia: Object;
+  localizacao: Object;
+  etapas: Object;
+  porte: Object;
+  atendimento: Object;
+  caracteristica: Object;
+  adesao: Object;
+}
+
 interface FilterContextProps {
   filterValues: MutableRefObject<FilterValues>;
   schools: SchoolProps[];
   setSchools: (schools: SchoolProps[]) => void;
   viewport: PropsViewport;
   setViewport: React.Dispatch<React.SetStateAction<PropsViewport>>;
+  allFilters: FiltersMaps | any;
+  setAllFilters: Dispatch<SetStateAction<FiltersMaps | undefined>>;
   clearFilters: () => void;
   forceUpdate: boolean;
   onChangeFilterValue(
@@ -70,6 +85,8 @@ const FilterContext = createContext({} as FilterContextProps);
 function FilterProvider({ children }: FilterProviderProps) {
   const [forceUpdate, handleForceUpdate] = useReducer((prev) => !prev, false);
   const [schools, setSchools] = useState<SchoolProps[]>([]);
+  const [allFilters, setAllFilters] = useState<FiltersMaps>();
+
   const [viewport, setViewport] = useState<PropsViewport>({
     initialViewState: {
       latitude: -15.8400953,
@@ -153,6 +170,8 @@ function FilterProvider({ children }: FilterProviderProps) {
       value={{
         schools,
         setSchools,
+        allFilters,
+        setAllFilters,
         viewport,
         setViewport,
         clearFilters,
