@@ -25,7 +25,7 @@ interface FiltersMaps {
 
 export function SideBar() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const [firstFilter, setFirstFilter] = useState<boolean>(true);
+  // const [firstFilter, setFirstFilter] = useState<boolean>(true);
   const [states, setStates] = useState<IStates[]>([]);
   const [cities, setCities] = useState<ICities[]>([]);
 
@@ -82,7 +82,6 @@ export function SideBar() {
           },
         } as PropsViewport),
     );
-    setFirstFilter(false);
     setSchools(response);
   }
 
