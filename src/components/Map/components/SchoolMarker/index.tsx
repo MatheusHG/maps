@@ -28,7 +28,7 @@ export function SchoolMarker(props: Props) {
   function formatCurrency(value: number) {
     return (
       <p>
-        {value.toLocaleString('pt-br', {
+        {value?.toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL',
         })}
