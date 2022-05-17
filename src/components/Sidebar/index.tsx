@@ -49,23 +49,24 @@ export function SideBar() {
     // const sql = FiltersService.generateSQL(queryString);
 
     const response = await FiltersService.searchByFilters(queryString);
-    const initialValue = 0;
 
+    const initialValueLat = 0;
     function calcLat() {
       const latitude = response.reduce(
         (previousValue, currentValue) =>
           previousValue + currentValue.latitude / response.length,
-        initialValue,
+        initialValueLat,
       );
 
       return latitude;
     }
 
+    const initialValueLong = 0;
     function calcLong() {
       const longitude = response.reduce(
         (previousValue, currentValue) =>
           previousValue + currentValue.longitude / response.length,
-        initialValue,
+        initialValueLong,
       );
 
       return longitude;
