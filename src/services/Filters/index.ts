@@ -49,9 +49,7 @@ class FiltersService implements IFilterService {
   }
 
   async getAllFilters() {
-    console.log('entrou');
     const { data } = await api.get('maps/filters');
-    console.log('resposta', data);
     return data;
   }
 
