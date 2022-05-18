@@ -86,11 +86,6 @@ export function SchoolMarker(props: Props) {
           </InfoPopupContainer>
 
           <InfoPopupContainer>
-            <span>Categoria Administrativa</span>
-            <p>{allFilters?.dependencia[school.dependencia]?.name}</p>
-          </InfoPopupContainer>
-
-          <InfoPopupContainer>
             <span>Localização</span>
             <p>{allFilters?.localizacao[school.localizacao]?.name}</p>
           </InfoPopupContainer>
