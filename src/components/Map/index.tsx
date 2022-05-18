@@ -11,25 +11,25 @@ const MAP_TOKEN =
 
 export function Map() {
   const { schools, viewport } = useFilterContext();
-  const [showName, setShowName] = useState<boolean>(false);
+  // const [showName, setShowName] = useState<boolean>(false);
 
-  function handleZoom(event: ViewStateChangeEvent) {
+  /* function handleZoom(event: ViewStateChangeEvent) {
     if (event.viewState.zoom > 15) {
       setShowName(true);
     } else {
       setShowName(false);
     }
-  }
+  } */
 
   const MapComponent = memo(() => (
     <ReactMapGl
-      onZoom={handleZoom}
+      // onZoom={handleZoom}
       mapboxAccessToken={MAP_TOKEN}
       {...viewport}
       mapStyle="mapbox://styles/mapbox/streets-v11"
     >
-      {schools?.map((school, index) => {
-        return <SchoolMarker showName={showName} school={school} />;
+      {schools?.map((school) => {
+        return <SchoolMarker school={school} />;
       })}
     </ReactMapGl>
   ));

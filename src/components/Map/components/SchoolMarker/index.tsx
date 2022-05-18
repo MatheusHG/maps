@@ -30,14 +30,14 @@ export interface SchoolProps {
 
 interface Props {
   school: SchoolProps;
-  showName: boolean;
+  // showName: boolean;
 }
 
 export function SchoolMarker(props: Props) {
   const { allFilters } = useFilterContext();
 
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  const { school, showName } = props;
+  const { school } = props;
 
   function formatCurrency(value: number) {
     return (
@@ -124,14 +124,6 @@ export function SchoolMarker(props: Props) {
     );
   }
 
-  function renderName() {
-    if (!showName) {
-      return null;
-    }
-
-    return <small> {school.escola}</small>;
-  }
-
   return (
     <>
       <Marker
@@ -147,7 +139,6 @@ export function SchoolMarker(props: Props) {
           >
             <AiTwotoneCompass size={16} color="#0064ad" />
           </button>
-          {renderName()}
         </SchoolContainer>
       </Marker>
       {renderPopUp()}
