@@ -66,6 +66,11 @@ export function SchoolMarker(props: Props) {
           <h2>{school.escola || 'Sem informação'}</h2>
 
           <InfoPopupContainer>
+            <span>Ideb 2019</span>
+            <p>{school['2019_ideb_em'] || 'Sem informação'}</p>
+          </InfoPopupContainer>
+
+          <InfoPopupContainer>
             <span>Evidência auditável</span>
             <p>{school.evid_audit || 'Sem informação'}</p>
           </InfoPopupContainer>
@@ -78,11 +83,6 @@ export function SchoolMarker(props: Props) {
           <InfoPopupContainer>
             <span>Nível de serviço</span>
             <p>{school.nivel_serv_comparado || 'Sem informação'}</p>
-          </InfoPopupContainer>
-
-          <InfoPopupContainer>
-            <span>Ideb 2019</span>
-            <p>{school['2019_ideb_em'] || 'Sem informação'}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
