@@ -13,7 +13,7 @@ export interface ICities {
 
 const getStates = async () => {
   const states = await axios.get<IStates[]>(
-    'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+    'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome',
   );
 
   const normalizedStates = states.data.map((item) => ({
