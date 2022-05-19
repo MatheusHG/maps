@@ -6,6 +6,7 @@ import {
   DispatchWithoutAction,
   MutableRefObject,
   ReactNode,
+  Ref,
   SetStateAction,
   useCallback,
   useEffect,
@@ -81,7 +82,7 @@ interface FilterContextProps {
     filterType: keyof Filters,
   ): JSX.Element[] | null;
   handleForceUpdate: DispatchWithoutAction;
-  mapRef: MutableRefObject<MapRef | undefined>;
+  mapRef: Ref<MapRef> | undefined;
 }
 
 interface FilterProviderProps {
@@ -184,7 +185,8 @@ function FilterProvider({ children }: FilterProviderProps) {
         handleForceUpdate,
         renderFilters,
         onChangeFilterValue,
-        mapRef,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mapRef: mapRef as any,
       }}
     >
       {children}
