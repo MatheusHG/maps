@@ -6,11 +6,15 @@ import {
   DispatchWithoutAction,
   MutableRefObject,
   ReactNode,
+  Ref,
   SetStateAction,
+  useCallback,
+  useEffect,
   useReducer,
   useRef,
   useState,
 } from 'react';
+import { MapRef } from 'react-map-gl';
 
 import { SchoolProps } from '@components/Map/components/SchoolMarker';
 import { Checkbox } from '@components/Sidebar/components/Checkbox';
@@ -54,12 +58,16 @@ interface FiltersMaps {
   adesao: Object;
 }
 
+interface Location {
+  latitude: number;
+  longitude: number;
+}
 interface FilterContextProps {
   filterValues: MutableRefObject<FilterValues>;
   schools: SchoolProps[];
   setSchools: (schools: SchoolProps[]) => void;
-  viewport: PropsViewport;
-  setViewport: React.Dispatch<React.SetStateAction<PropsViewport>>;
+  location: Location;
+  setLocation: React.Dispatch<React.SetStateAction<Location>>;
   allFilters: FiltersMaps | any;
   setAllFilters: Dispatch<SetStateAction<FiltersMaps | undefined>>;
   clearFilters: () => void;
@@ -74,6 +82,7 @@ interface FilterContextProps {
     filterType: keyof Filters,
   ): JSX.Element[] | null;
   handleForceUpdate: DispatchWithoutAction;
+  mapRef: Ref<MapRef> | undefined;
 }
 
 interface FilterProviderProps {
@@ -83,23 +92,19 @@ interface FilterProviderProps {
 const FilterContext = createContext({} as FilterContextProps);
 
 function FilterProvider({ children }: FilterProviderProps) {
+  const mapRef = useRef<MapRef>();
+
   const [forceUpdate, handleForceUpdate] = useReducer((prev) => !prev, false);
   const [schools, setSchools] = useState<SchoolProps[]>([]);
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
-
-  const [viewport, setViewport] = useState<PropsViewport>({
-    initialViewState: {
-      latitude: -15.8400953,
-      longitude: -48.0408881,
-      zoom: 10,
-    },
-    style: {
-      width: '100%',
-      height: '100vh',
-    },
-  });
+  const [location, setLocation] = useState<Location>({} as Location);
 
   const filterValues = useRef<FilterValues>({} as FilterValues);
+
+  useEffect(() => {
+    const { latitude, longitude } = location;
+    mapRef.current?.flyTo({ center: [longitude, latitude], duration: 1000 });
+  }, [location]);
 
   function onChangeFilterValue(
     filterName: keyof FilterValues,
@@ -172,14 +177,16 @@ function FilterProvider({ children }: FilterProviderProps) {
         setSchools,
         allFilters,
         setAllFilters,
-        viewport,
-        setViewport,
+        location,
+        setLocation,
         clearFilters,
         filterValues,
         forceUpdate,
         handleForceUpdate,
         renderFilters,
         onChangeFilterValue,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mapRef: mapRef as any,
       }}
     >
       {children}

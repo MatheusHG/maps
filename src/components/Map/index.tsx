@@ -1,38 +1,49 @@
 /* eslint-disable camelcase */
-import { memo, useState } from 'react';
-import ReactMapGl, { ViewStateChangeEvent } from 'react-map-gl';
+import ReactMapGl, {
+  FullscreenControl,
+  GeolocateControl,
+  NavigationControl,
+  ScaleControl,
+} from 'react-map-gl';
 
 import { useFilterContext } from '@hooks/useFilterContext';
 
-import { SchoolMarker } from './components/SchoolMarker';
+import { Schools } from './components/Schools';
 
 const MAP_TOKEN =
   'pk.eyJ1IjoicGlsYWIiLCJhIjoiY2wweTQwMzZ3MGU4eTNjazF1Z290bmljcyJ9.ihIhhD4xNC2xtGCgn9uoVw';
 
+const initialViewState = {
+  latitude: -15.8400953,
+  longitude: -48.0408881,
+  zoom: 10,
+  bearing: 0,
+  pitch: 0,
+};
+
+const style = {
+  width: '100%',
+  height: '100vh',
+};
+
 export function Map() {
-  const { schools, viewport } = useFilterContext();
-  // const [showName, setShowName] = useState<boolean>(false);
+  const { schools, mapRef } = useFilterContext();
 
-  /* function handleZoom(event: ViewStateChangeEvent) {
-    if (event.viewState.zoom > 15) {
-      setShowName(true);
-    } else {
-      setShowName(false);
-    }
-  } */
-
-  const MapComponent = memo(() => (
+  return (
     <ReactMapGl
+      ref={mapRef}
       // onZoom={handleZoom}
+      initialViewState={initialViewState}
+      style={style}
       mapboxAccessToken={MAP_TOKEN}
-      {...viewport}
       mapStyle="mapbox://styles/mapbox/streets-v11"
     >
-      {schools?.map((school) => {
-        return <SchoolMarker school={school} />;
-      })}
-    </ReactMapGl>
-  ));
+      <GeolocateControl position="top-right" />
+      <FullscreenControl position="top-right" />
+      <NavigationControl position="top-right" />
+      <ScaleControl position="bottom-right" />
 
-  return <MapComponent />;
+      <Schools schools={schools} />
+    </ReactMapGl>
+  );
 }
