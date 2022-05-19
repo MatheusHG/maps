@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BiArrowFromRight } from 'react-icons/bi';
 
 import { getCities, getStates, IStates, ICities } from '@services/City/index';
 import FiltersService from '@services/Filters';
 
-import { PropsViewport } from '@contexts/FilterContext';
 import { Filters } from '@contexts/FilterContext/types';
 
 import { useFilterContext } from '@hooks/useFilterContext';
@@ -25,7 +24,7 @@ export function SideBar() {
     renderFilters,
     setSchools,
     clearFilters,
-    setViewport,
+    setLocation,
   } = useFilterContext();
 
   async function handleConfirmFilterValues() {
@@ -59,17 +58,8 @@ export function SideBar() {
       return longitude;
     }
 
-    setViewport(
-      (prevState) =>
-        ({
-          ...prevState,
-          initialViewState: {
-            latitude: calcLat(),
-            longitude: calcLong() - 0.1,
-            zoom: 10,
-          },
-        } as PropsViewport),
-    );
+    setLocation({ latitude: calcLat(), longitude: calcLong() - 0.1 });
+
     setSchools(response);
   }
 
