@@ -58,7 +58,9 @@ export function SideBar() {
       return longitude;
     }
 
-    setLocation({ latitude: calcLat(), longitude: calcLong() - 0.1 });
+    if (response.length > 0) {
+      setLocation({ latitude: calcLat(), longitude: calcLong() - 0.1 });
+    }
 
     setSchools(response);
   }
