@@ -49,7 +49,6 @@ export function SchoolMarker(props: Props) {
       </p>
     );
   }
-
   function renderPopUp() {
     if (!isSelected) {
       return null;
@@ -87,32 +86,32 @@ export function SchoolMarker(props: Props) {
 
           <InfoPopupContainer>
             <span>Localização</span>
-            <p>{allFilters?.localizacao[school.localizacao]?.name}</p>
+            <p>{allFilters?.localizacao[school.localizacao - 1]?.name}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Etapas e Modalidade</span>
-            <p>{allFilters?.etapas[school.etapas]?.name}</p>
+            <p>{allFilters?.etapas[school.etapas - 1]?.name}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Porte de Matrícula</span>
-            <p>{allFilters?.porte[school.porte]?.name}</p>
+            <p>{allFilters?.porte[school.porte - 1]?.name}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Restrição de Atendimentoa</span>
-            <p>{allFilters?.atendimento[school.atendimento]?.name}</p>
+            <p>{allFilters?.atendimento[school.atendimento - 1]?.name}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Localidade Diferenciada</span>
-            <p>{allFilters?.caracteristica[school.caracteristica]?.name}</p>
+            <p>{allFilters?.caracteristica[school.caracteristica - 1]?.name}</p>
           </InfoPopupContainer>
 
           <InfoPopupContainer>
             <span>Adesão</span>
-            <p>{allFilters?.adesao[school.adesao]?.name}</p>
+            <p>{allFilters?.adesao[school.adesao - 1]?.name}</p>
           </InfoPopupContainer>
         </PopupContainer>
       </Popup>
