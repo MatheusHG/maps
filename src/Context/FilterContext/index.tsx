@@ -7,10 +7,13 @@ import {
   MutableRefObject,
   ReactNode,
   SetStateAction,
+  useCallback,
+  useEffect,
   useReducer,
   useRef,
   useState,
 } from 'react';
+import { MapRef } from 'react-map-gl';
 
 import { SchoolProps } from '@components/Map/components/SchoolMarker';
 import { Checkbox } from '@components/Sidebar/components/Checkbox';
@@ -78,6 +81,7 @@ interface FilterContextProps {
     filterType: keyof Filters,
   ): JSX.Element[] | null;
   handleForceUpdate: DispatchWithoutAction;
+  mapRef: MutableRefObject<MapRef | undefined>;
 }
 
 interface FilterProviderProps {
@@ -87,12 +91,19 @@ interface FilterProviderProps {
 const FilterContext = createContext({} as FilterContextProps);
 
 function FilterProvider({ children }: FilterProviderProps) {
+  const mapRef = useRef<MapRef>();
+
   const [forceUpdate, handleForceUpdate] = useReducer((prev) => !prev, false);
   const [schools, setSchools] = useState<SchoolProps[]>([]);
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
   const [location, setLocation] = useState<Location>({} as Location);
 
   const filterValues = useRef<FilterValues>({} as FilterValues);
+
+  useEffect(() => {
+    const { latitude, longitude } = location;
+    mapRef.current?.flyTo({ center: [longitude, latitude], duration: 1000 });
+  }, [location]);
 
   function onChangeFilterValue(
     filterName: keyof FilterValues,
@@ -173,6 +184,7 @@ function FilterProvider({ children }: FilterProviderProps) {
         handleForceUpdate,
         renderFilters,
         onChangeFilterValue,
+        mapRef,
       }}
     >
       {children}

@@ -1,13 +1,10 @@
 /* eslint-disable camelcase */
-import { memo, useEffect, useState } from 'react';
 import ReactMapGl, {
   FullscreenControl,
   GeolocateControl,
   NavigationControl,
   ScaleControl,
 } from 'react-map-gl';
-
-import { PropsViewport } from '@contexts/FilterContext';
 
 import { useFilterContext } from '@hooks/useFilterContext';
 
@@ -16,35 +13,29 @@ import { Schools } from './components/Schools';
 const MAP_TOKEN =
   'pk.eyJ1IjoicGlsYWIiLCJhIjoiY2wweTQwMzZ3MGU4eTNjazF1Z290bmljcyJ9.ihIhhD4xNC2xtGCgn9uoVw';
 
+const initialViewState = {
+  latitude: -15.8400953,
+  longitude: -48.0408881,
+  zoom: 10,
+  bearing: 0,
+  pitch: 0,
+};
+
+const style = {
+  width: '100%',
+  height: '100vh',
+};
+
 export function Map() {
-  const { schools, location } = useFilterContext();
+  const { schools, mapRef } = useFilterContext();
 
-  const [viewport, setViewport] = useState<PropsViewport>({
-    initialViewState: {
-      latitude: -15.8400953,
-      longitude: -48.0408881,
-      zoom: 10,
-    },
-    style: {
-      width: '100%',
-      height: '100vh',
-    },
-  });
-  useEffect(() => {
-    setViewport((prevState) => ({
-      ...prevState,
-      initialViewState: {
-        ...prevState.initialViewState,
-        ...location,
-      },
-    }));
-  }, [location]);
-
-  const MapComponent = memo(() => (
+  return (
     <ReactMapGl
+      ref={mapRef}
       // onZoom={handleZoom}
+      initialViewState={initialViewState}
+      style={style}
       mapboxAccessToken={MAP_TOKEN}
-      {...viewport}
       mapStyle="mapbox://styles/mapbox/streets-v11"
     >
       <GeolocateControl position="top-right" />
@@ -54,7 +45,5 @@ export function Map() {
 
       <Schools schools={schools} />
     </ReactMapGl>
-  ));
-
-  return <MapComponent />;
+  );
 }
