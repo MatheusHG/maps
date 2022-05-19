@@ -33,6 +33,8 @@ interface Props {
   // showName: boolean;
 }
 
+type IdebValues = '2019_ideb_1_5' | '2019_ideb_6_9' | '2019_ideb_em';
+
 export function SchoolMarker(props: Props) {
   const { allFilters } = useFilterContext();
 
@@ -49,11 +51,42 @@ export function SchoolMarker(props: Props) {
       </p>
     );
   }
+
+  function renderMaxIdeb() {
+    const formatIdeb = (ideb: string) => {
+      return ideb ? Number(ideb.replace(',', '.')) : 0;
+    };
+
+    const getMaxIdeb = () => {
+      const idebsLabels = [
+        '2019_ideb_1_5',
+        '2019_ideb_6_9',
+        '2019_ideb_em',
+      ] as IdebValues[];
+
+      const idebs = idebsLabels.map((ideb) => formatIdeb(school[ideb]));
+
+      const maxIdeb = Math.max.apply(null, idebs);
+      const maxIdebLabel =
+        idebsLabels[idebs.findIndex((ideb) => maxIdeb === ideb)];
+
+      return { maxIdeb, maxIdebLabel };
+    };
+
+    const ideb = getMaxIdeb();
+
+    return (
+      <InfoPopupContainer>
+        <span>{ideb.maxIdebLabel}</span>
+        <p>{ideb.maxIdeb}</p>
+      </InfoPopupContainer>
+    );
+  }
+
   function renderPopUp() {
     if (!isSelected) {
       return null;
     }
-
     return (
       <Popup latitude={school.latitude} longitude={school.longitude as number}>
         <PopupContainer>
@@ -64,10 +97,7 @@ export function SchoolMarker(props: Props) {
 
           <h2>{school.escola || 'Sem informação'}</h2>
 
-          <InfoPopupContainer>
-            <span>Ideb 2019</span>
-            <p>{school['2019_ideb_em'] || 'Sem informação'}</p>
-          </InfoPopupContainer>
+          {renderMaxIdeb()}
 
           <InfoPopupContainer>
             <span>Evidência auditável</span>
