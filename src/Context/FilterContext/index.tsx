@@ -63,7 +63,7 @@ interface Location {
   longitude: number;
 }
 interface FilterContextProps {
-  filterValues: MutableRefObject<FilterValues>;
+  filterValues: FilterValues;
   schools: SchoolProps[];
   setSchools: (schools: SchoolProps[]) => void;
   location: Location;
@@ -102,7 +102,8 @@ function FilterProvider({ children }: FilterProviderProps) {
   const [location, setLocation] = useState<Location>({} as Location);
   const [myLocation, setMyLocation] = useState<boolean>(true);
 
-  const filterValues = useRef<FilterValues>({} as FilterValues);
+  // eslint-disable-next-line prettier/prettier
+  const [filterValues, setFilterValues] = useState<FilterValues>({} as FilterValues);
 
   useEffect(() => {
     const { latitude, longitude } = location;
@@ -114,13 +115,13 @@ function FilterProvider({ children }: FilterProviderProps) {
     value: InFilterValues,
     type: VALUE_TYPE,
   ) {
-    filterValues.current = {
-      ...JSON.parse(JSON.stringify(filterValues?.current)),
+    setFilterValues((prevState) => ({
+      ...JSON.parse(JSON.stringify(prevState)),
       [filterName]: {
         value,
         type,
       },
-    };
+    }));
   }
 
   function createSelects(selectsObject: SelectProps[]) {
@@ -169,7 +170,7 @@ function FilterProvider({ children }: FilterProviderProps) {
   }
 
   function clearFilters() {
-    filterValues.current = {} as FilterValues;
+    setFilterValues({} as FilterValues);
     handleForceUpdate();
   }
 

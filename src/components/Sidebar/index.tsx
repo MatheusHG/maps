@@ -15,7 +15,7 @@ export function SideBar() {
   const { allFilters, setAllFilters, setMyLocation } = useFilterContext();
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  // const [firstFilter, setFirstFilter] = useState<boolean>(true);
+  const [firstFilter, setFirstFilter] = useState<boolean>(true);
   const [states, setStates] = useState<IStates[]>([]);
   const [cities, setCities] = useState<ICities[]>([]);
   const {
@@ -28,11 +28,9 @@ export function SideBar() {
   } = useFilterContext();
 
   async function handleConfirmFilterValues() {
-    if (!filterValues.current.municipio) return;
+    if (!filterValues.municipio) return;
 
-    const queryString = FiltersService.generateQueryString(
-      filterValues?.current,
-    );
+    const queryString = FiltersService.generateQueryString(filterValues);
     // const sql = FiltersService.generateSQL(queryString);
 
     const response = await FiltersService.searchByFilters(queryString);
@@ -66,6 +64,10 @@ export function SideBar() {
 
     setSchools(response);
   }
+  function handleClear() {
+    clearFilters();
+    setFirstFilter((prev) => !prev);
+  }
 
   useEffect(() => {
     async function loadFilters() {
@@ -82,7 +84,7 @@ export function SideBar() {
   useEffect(() => {
     (async () => {
       const selectedState = states.find(
-        (item) => item.sigla === filterValues?.current?.codigo_uf?.value,
+        (item) => item.sigla === filterValues?.codigo_uf?.value,
       );
       if (selectedState) {
         const citiesLocations = await getCities(selectedState?.id);
@@ -90,7 +92,7 @@ export function SideBar() {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forceUpdate, states]);
+  }, [forceUpdate, states, firstFilter]);
 
   const filters = useMemo(
     () =>
@@ -179,13 +181,12 @@ export function SideBar() {
         ],
       } as Filters),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [forceUpdate, allFilters, states, cities],
+    [forceUpdate, allFilters, states, cities, firstFilter],
   );
-
   return (
     <>
       <Container isOpen={isOpen}>
-        <Header onClick={handleConfirmFilterValues} onClear={clearFilters} />
+        <Header onClick={handleConfirmFilterValues} onClear={handleClear} />
         <Content>
           {renderFilters(filters, 'multipleSelects')}
 

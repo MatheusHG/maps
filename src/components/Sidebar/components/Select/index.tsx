@@ -3,6 +3,7 @@ import React, { ChangeEvent } from 'react';
 import {
   MultipleSelectsProps,
   SelectProps,
+  SelectValue,
   VALUE_TYPE,
 } from '@contexts/FilterContext/types';
 
@@ -34,16 +35,20 @@ export function Select(props: SelectProps) {
     }
   }
 
+  const getValue = () => {
+    const filterValue = filterValues[column] as SelectValue;
+    return filterValue?.value || 'DEFAULT VALUE';
+  };
+
   if (hasNoBox) {
     return (
       <SelectElement
-        disabled={
-          dependencyColumn && !filterValues.current[dependencyColumn]?.value
-        }
+        disabled={dependencyColumn && !filterValues[dependencyColumn]?.value}
+        value={getValue()}
         small={small}
         onChange={handleSelect}
       >
-        <option value="">{placeholder}</option>
+        <option value="DEFAULT VALUE">{placeholder}</option>
         {items?.map((item: any) => (
           <option key={item.id} value={item[labelProp]}>
             {item[labelProp]}
@@ -55,8 +60,8 @@ export function Select(props: SelectProps) {
 
   return (
     <Box label={title}>
-      <SelectElement small={small} onChange={handleSelect}>
-        <option value="">{placeholder}</option>
+      <SelectElement value={getValue()} small={small} onChange={handleSelect}>
+        <option value="DEFAULT VALUE">{placeholder}</option>
         {items?.map((item: any) => (
           <option key={item.id} value={item[labelProp]}>
             {item[labelProp]}
