@@ -68,6 +68,8 @@ interface FilterContextProps {
   setSchools: (schools: SchoolProps[]) => void;
   location: Location;
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
+  myLocation: boolean;
+  setMyLocation: React.Dispatch<React.SetStateAction<boolean>>;
   allFilters: FiltersMaps | any;
   setAllFilters: Dispatch<SetStateAction<FiltersMaps | undefined>>;
   clearFilters: () => void;
@@ -98,6 +100,7 @@ function FilterProvider({ children }: FilterProviderProps) {
   const [schools, setSchools] = useState<SchoolProps[]>([]);
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
   const [location, setLocation] = useState<Location>({} as Location);
+  const [myLocation, setMyLocation] = useState<boolean>(true);
 
   const filterValues = useRef<FilterValues>({} as FilterValues);
 
@@ -179,6 +182,8 @@ function FilterProvider({ children }: FilterProviderProps) {
         setAllFilters,
         location,
         setLocation,
+        myLocation,
+        setMyLocation,
         clearFilters,
         filterValues,
         forceUpdate,

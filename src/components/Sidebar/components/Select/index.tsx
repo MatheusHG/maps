@@ -1,7 +1,5 @@
 import React, { ChangeEvent } from 'react';
 
-import { ICities } from '@services/City';
-
 import {
   MultipleSelectsProps,
   SelectProps,

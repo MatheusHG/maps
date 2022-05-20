@@ -12,7 +12,7 @@ import { Header } from './components/Header';
 import { Container, Content, CloseLabel } from './style';
 
 export function SideBar() {
-  const { allFilters, setAllFilters } = useFilterContext();
+  const { allFilters, setAllFilters, setMyLocation } = useFilterContext();
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
   // const [firstFilter, setFirstFilter] = useState<boolean>(true);
@@ -58,7 +58,11 @@ export function SideBar() {
       return longitude;
     }
 
-    setLocation({ latitude: calcLat(), longitude: calcLong() - 0.1 });
+    if (response.length > 0) {
+      setLocation({ latitude: calcLat(), longitude: calcLong() - 0.1 });
+    }
+
+    setMyLocation(false);
 
     setSchools(response);
   }
