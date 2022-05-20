@@ -4,6 +4,7 @@ import { ChangeEvent } from 'react';
 import {
   CheckboxItemProps,
   CheckboxProps,
+  CheckboxValue,
   VALUE_TYPE,
 } from '@contexts/FilterContext/types';
 
@@ -24,8 +25,7 @@ export function Checkbox(props: CheckboxProps) {
   ) {
     let checkedValues = [];
 
-    const values =
-      (filterValues?.current?.[column]?.value as CheckboxItemProps[]) || [];
+    const values = (filterValues?.[column]?.value as CheckboxItemProps[]) || [];
 
     if (!event.target.checked) {
       checkedValues = values.filter((checkbox) => checkbox.id !== id);
@@ -35,6 +35,11 @@ export function Checkbox(props: CheckboxProps) {
 
     onChangeFilterValue(column, checkedValues, VALUE_TYPE.CHECKBOX);
   }
+  const isChecked = (name: string) => {
+    const filterValue = filterValues[column] as CheckboxValue;
+
+    return filterValue?.value.some((item: any) => item.name === name);
+  };
 
   return (
     <Box label={title}>
@@ -43,6 +48,7 @@ export function Checkbox(props: CheckboxProps) {
           <Content key={id}>
             <CheckBox
               value={id}
+              checked={isChecked(name)}
               onChange={(event) => handleChecked(event, id, name)}
               {...rest}
             />

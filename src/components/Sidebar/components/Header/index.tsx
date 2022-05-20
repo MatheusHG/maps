@@ -12,9 +12,9 @@ export function Header(props: Props) {
     <HeaderStyled>
       <Title>Filtros</Title>
       <div>
-        {/* <button type="button" onClick={onClear}>
+        <button type="button" onClick={onClear}>
           Limpar
-        </button> */}
+        </button>
 
         <button type="button" onClick={onClick}>
           Buscar

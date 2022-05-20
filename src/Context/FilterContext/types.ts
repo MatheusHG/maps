@@ -11,7 +11,7 @@ interface CommumValue {
   type: VALUE_TYPE;
 }
 
-interface SelectValue extends CommumValue {
+export interface SelectValue extends CommumValue {
   // eslint-disable-next-line no-use-before-define
 
   value: string;
@@ -22,7 +22,7 @@ export interface RangeItemProps {
   lt: number;
 }
 
-interface RangeValue extends CommumValue {
+export interface RangeValue extends CommumValue {
   // eslint-disable-next-line no-use-before-define
 
   value: RangeItemProps;
@@ -33,7 +33,7 @@ export interface CheckboxItemProps {
   name: string;
 }
 
-interface CheckboxValue extends CommumValue {
+export interface CheckboxValue extends CommumValue {
   value: CheckboxItemProps[];
 }
 
