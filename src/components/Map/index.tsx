@@ -27,7 +27,7 @@ const style = {
 };
 
 export function Map() {
-  const { schools, mapRef } = useFilterContext();
+  const { schools, mapRef, myLocation } = useFilterContext();
 
   function LightOrDark() {
     const date = new Date();
@@ -48,7 +48,7 @@ export function Map() {
       mapboxAccessToken={MAP_TOKEN}
       mapStyle={`mapbox://styles/mapbox/${LightOrDark()}`}
     >
-      <GeolocateControl position="top-right" />
+      {myLocation && <GeolocateControl position="top-right" />}
       <FullscreenControl position="top-right" />
       <NavigationControl position="top-right" />
       <ScaleControl position="bottom-right" />
