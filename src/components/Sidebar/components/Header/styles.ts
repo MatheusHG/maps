@@ -1,6 +1,7 @@
+/* eslint-disable no-confusing-arrow */
 import styled from 'styled-components';
 
-export const HeaderStyled = styled.header`
+export const HeaderStyled = styled.header<{ searchIsLocked?: boolean }>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   padding: 3.2rem 2.4rem 1.4rem;
@@ -19,10 +20,11 @@ export const HeaderStyled = styled.header`
     font-size: 1.8rem;
     letter-spacing: 0.06rem;
     transition: 0.1s ease-in;
-    cursor: pointer;
+    cursor: ${({ searchIsLocked }) => (searchIsLocked ? 'default' : 'pointer')};
 
     :hover {
-      filter: brightness(0.8);
+      filter: ${({ searchIsLocked }) =>
+        searchIsLocked ? 'brightness(1)' : 'brightness(0.8)'};
     }
   }
 `;
