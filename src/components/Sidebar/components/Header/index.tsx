@@ -1,3 +1,5 @@
+import { useFilterContext } from '@hooks/useFilterContext';
+
 import { HeaderStyled, Title } from './styles';
 
 interface Props {
@@ -8,8 +10,10 @@ interface Props {
 export function Header(props: Props) {
   const { onClick, onClear } = props;
 
+  const { filterValues } = useFilterContext();
+
   return (
-    <HeaderStyled>
+    <HeaderStyled searchIsLocked={!filterValues.municipio?.value}>
       <Title>Filtros</Title>
       <div>
         <button type="button" onClick={onClear}>

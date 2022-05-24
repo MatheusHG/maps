@@ -14,7 +14,7 @@ import { Box } from '../Box';
 import { CheckBox, Content, Label } from './styles';
 
 export function Checkbox(props: CheckboxProps) {
-  const { title, items, column } = props;
+  const { title, items, column, isLocked } = props;
 
   const { filterValues, onChangeFilterValue } = useFilterContext();
 
@@ -42,7 +42,7 @@ export function Checkbox(props: CheckboxProps) {
   };
 
   return (
-    <Box label={title}>
+    <Box label={title} isLocked={isLocked}>
       <>
         {items?.map(({ id, name, ...rest }) => (
           <Content key={id}>

@@ -1,13 +1,15 @@
-import React, { ReactChild, useState } from 'react';
+import { ReactChild, useState } from 'react';
 
-import { Button, Container, Content, Filters, Label } from './styles';
+import { BlockBox, Button, Container, Content, Filters, Label } from './styles';
 
 interface BoxProps {
   label: string;
   children: ReactChild;
+  isLocked?: boolean;
 }
 
-export function Box({ label, children }: BoxProps) {
+export function Box(props: BoxProps) {
+  const { children, label, isLocked } = props;
   const [large, setLarge] = useState<boolean>(false);
 
   function handleSize() {
@@ -18,9 +20,12 @@ export function Box({ label, children }: BoxProps) {
     <Container>
       <Content>
         <Label>{label}</Label>
-        <Button onClick={handleSize}>{large ? 'menos' : 'mais'}</Button>
+        {!isLocked && (
+          <Button onClick={handleSize}>{large ? 'menos' : 'mais'}</Button>
+        )}
       </Content>
       {large && <Filters>{children}</Filters>}
+      {isLocked && <BlockBox />}
     </Container>
   );
 }
