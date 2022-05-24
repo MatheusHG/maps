@@ -21,16 +21,8 @@ import {
 
 export function RangeSlider(props: RangeProps) {
   const { label, min, max, column } = props;
-  //  const [value, setValue] = useState<number[]>([min || 0, max || 100]);
 
   const { onChangeFilterValue, filterValues } = useFilterContext();
-  // useEffect(() => {
-  //   const filterValue = filterValues[column] as RangeValue;
-  //   const gt = filterValue?.value.gt;
-  //   const lt = filterValue?.value.lt;
-  //   onChangeFilterValue(column, { lt, gt }, VALUE_TYPE.SLIDER);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [filterValues[column]]);
 
   const minDistance = 1;
 
@@ -112,7 +104,7 @@ export function RangeSlider(props: RangeProps) {
 }
 
 export function MultiRangeSlider(props: MultipleRangeProps) {
-  const { title, min, max, items } = props;
+  const { title, min, max, items, isLocked } = props;
 
   const renderRangeSlider = (rangeSlider: RangeProps) => {
     const finalMin = rangeSlider.min || min;
@@ -131,7 +123,7 @@ export function MultiRangeSlider(props: MultipleRangeProps) {
   };
 
   return (
-    <Box label={title}>
+    <Box label={title} isLocked={isLocked}>
       <Content>{items.map(renderRangeSlider)}</Content>
     </Box>
   );

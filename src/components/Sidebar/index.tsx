@@ -18,6 +18,8 @@ export function SideBar() {
   const [firstFilter, setFirstFilter] = useState<boolean>(true);
   const [states, setStates] = useState<IStates[]>([]);
   const [cities, setCities] = useState<ICities[]>([]);
+  const [isLocked, setIsLocked] = useState<boolean>(true);
+
   const {
     filterValues,
     forceUpdate,
@@ -26,6 +28,29 @@ export function SideBar() {
     clearFilters,
     setLocation,
   } = useFilterContext();
+
+  useEffect(() => {
+    async function loadFilters() {
+      const response = await FiltersService.getAllFilters();
+      setAllFilters(response);
+
+      const statesLocations = await getStates();
+      setStates(statesLocations);
+    }
+
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    if (
+      !filterValues.municipio?.value ||
+      filterValues.municipio?.value === 'DEFAULT VALUE'
+    ) {
+      setIsLocked(true);
+      return;
+    }
+    setIsLocked(false);
+  }, [filterValues.municipio]);
 
   async function handleConfirmFilterValues() {
     if (!filterValues.municipio) return;
@@ -68,19 +93,6 @@ export function SideBar() {
     clearFilters();
     setFirstFilter((prev) => !prev);
   }
-
-  useEffect(() => {
-    async function loadFilters() {
-      const response = await FiltersService.getAllFilters();
-      setAllFilters(response);
-
-      const statesLocations = await getStates();
-      setStates(statesLocations);
-    }
-
-    loadFilters();
-  }, []);
-
   useEffect(() => {
     (async () => {
       const selectedState = states.find(
@@ -126,36 +138,43 @@ export function SideBar() {
             title: 'Categoria Administrativa',
             column: 'dependencia',
             items: allFilters?.dependencia,
+            isLocked,
           },
           {
             title: 'Localização',
             column: 'localizacao',
             items: allFilters?.localizacao,
+            isLocked,
           },
           {
             title: 'Etapas e Modalidade',
             column: 'etapas',
             items: allFilters?.etapas,
+            isLocked,
           },
           {
             title: 'Porte de Matrícula',
             column: 'porte',
             items: allFilters?.porte,
+            isLocked,
           },
           {
             title: 'Restrição de Atendimento',
             column: 'atendimento',
             items: allFilters?.atendimento,
+            isLocked,
           },
           {
             title: 'Localidade Diferenciada',
             column: 'caracteristica',
             items: allFilters?.caracteristica,
+            isLocked,
           },
           {
             title: 'Adesao',
             column: 'adesao',
             items: allFilters?.adesao,
+            isLocked,
           },
         ],
         multipleSliders: [
@@ -163,6 +182,7 @@ export function SideBar() {
             title: 'Critérios Numéricos',
             min: 0,
             max: 10,
+            isLocked,
             items: [
               {
                 column: '2019_ideb_1_5',
@@ -181,7 +201,7 @@ export function SideBar() {
         ],
       } as Filters),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [forceUpdate, allFilters, states, cities, firstFilter],
+    [forceUpdate, allFilters, states, cities, firstFilter, isLocked],
   );
   return (
     <>

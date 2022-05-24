@@ -57,6 +57,7 @@ export interface FilterValues {
 export interface CommumProps {
   title: string;
   column: keyof FilterValues;
+  isLocked?: boolean;
 }
 
 export interface SelectProps extends CommumProps {
@@ -85,11 +86,13 @@ export interface MultipleRangeProps {
   max: number;
   min: number;
   items: RangeProps[];
+  isLocked?: boolean;
 }
 
 export interface MultipleSelectsProps {
   title: string;
   items: SelectProps[];
+  isLocked?: boolean;
 }
 
 export interface Filters {

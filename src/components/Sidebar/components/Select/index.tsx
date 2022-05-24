@@ -31,6 +31,7 @@ export function Select(props: SelectProps) {
   function handleSelect(event: ChangeEvent<HTMLSelectElement>) {
     onChangeFilterValue(column, event.target.value, VALUE_TYPE.SELECT);
     if (shouldForceUpdate) {
+      onChangeFilterValue('municipio', '', VALUE_TYPE.SELECT);
       handleForceUpdate();
     }
   }
@@ -73,10 +74,10 @@ export function Select(props: SelectProps) {
 }
 
 export function MultiSelect(props: MultipleSelectsProps) {
-  const { items, title } = props;
+  const { items, title, isLocked } = props;
 
   return (
-    <Box label={title}>
+    <Box label={title} isLocked={isLocked}>
       <Content>
         {items.map((item) => (
           <Select {...item} hasNoBox />
