@@ -13,7 +13,7 @@ export function Header(props: Props) {
   const { filterValues } = useFilterContext();
 
   return (
-    <HeaderStyled searchIsLocked={!filterValues.municipio?.value}>
+    <HeaderStyled>
       <Title>Filtros</Title>
       <div>
         <button type="button" onClick={onClear}>

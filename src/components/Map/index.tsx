@@ -27,7 +27,7 @@ const style = {
 };
 
 export function Map() {
-  const { schools, mapRef, myLocation } = useFilterContext();
+  const { schools, mapRef, myLocation, cities } = useFilterContext();
 
   function LightOrDark() {
     const date = new Date();
@@ -53,7 +53,10 @@ export function Map() {
       <NavigationControl position="top-right" />
       <ScaleControl position="bottom-right" />
 
-      <Schools schools={schools} />
+      <Schools
+        values={!cities.length ? schools : cities}
+        query={!cities.length ? 'school' : 'cities'}
+      />
     </ReactMapGl>
   );
 }

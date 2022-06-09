@@ -53,11 +53,22 @@ class FiltersService implements IFilterService {
     return data;
   }
 
+  async getCities(ufCode: string) {
+    const { data } = await api.get(`maps/municipio?codigo_uf=${ufCode}`);
+    return data;
+  }
+
+  async getStateResume(ufCode: string, cityName: string) {
+    const { data } = await api.get(
+      `maps/abstract?codigo_uf=${ufCode}&nome_municipio=${cityName}`,
+    );
+    return data;
+  }
+
   async searchByFilters(queryString: string) {
     const { data } = await api.post<SchoolProps[]>('maps', { queryString });
 
     return data;
   }
 }
-
 export default new FiltersService();

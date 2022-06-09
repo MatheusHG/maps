@@ -25,6 +25,7 @@ export function SideBar() {
     forceUpdate,
     renderFilters,
     setSchools,
+    setCities: setCitiess,
     clearFilters,
     setLocation,
   } = useFilterContext();
@@ -52,37 +53,54 @@ export function SideBar() {
     setIsLocked(false);
   }, [filterValues.municipio]);
 
+  function calcLat(response: any) {
+    const latitude = response.reduce(
+      (previousValue, currentValue) =>
+        previousValue + currentValue.latitude / response.length,
+      0,
+    );
+
+    return latitude;
+  }
+
+  function calcLong(response: any) {
+    const longitude = response.reduce(
+      (previousValue, currentValue) =>
+        previousValue + currentValue.longitude / response.length,
+      0,
+    );
+
+    return longitude;
+  }
+
   async function handleConfirmFilterValues() {
-    if (!filterValues.municipio) return;
+    if (filterValues.codigo_uf.value && !filterValues.municipio.value) {
+      const response = await FiltersService.getCities(
+        filterValues.codigo_uf.value,
+      );
+      setCitiess(response);
+
+      if (response.length > 0) {
+        setLocation({
+          latitude: calcLat(response),
+          longitude: calcLong(response) - 0.1,
+        });
+      }
+
+      setMyLocation(false);
+
+      return;
+    }
 
     const queryString = FiltersService.generateQueryString(filterValues);
     // const sql = FiltersService.generateSQL(queryString);
-
     const response = await FiltersService.searchByFilters(queryString);
-    const initialValueLat = 0;
-    function calcLat() {
-      const latitude = response.reduce(
-        (previousValue, currentValue) =>
-          previousValue + currentValue.latitude / response.length,
-        initialValueLat,
-      );
-
-      return latitude;
-    }
-
-    const initialValueLong = 0;
-    function calcLong() {
-      const longitude = response.reduce(
-        (previousValue, currentValue) =>
-          previousValue + currentValue.longitude / response.length,
-        initialValueLong,
-      );
-
-      return longitude;
-    }
 
     if (response.length > 0) {
-      setLocation({ latitude: calcLat(), longitude: calcLong() - 0.1 });
+      setLocation({
+        latitude: calcLat(response),
+        longitude: calcLong(response) - 0.1,
+      });
     }
 
     setMyLocation(false);

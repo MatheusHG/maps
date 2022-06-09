@@ -16,7 +16,10 @@ import {
 } from 'react';
 import { MapRef } from 'react-map-gl';
 
-import { SchoolProps } from '@components/Map/components/SchoolMarker';
+import {
+  SchoolProps,
+  CityProps,
+} from '@components/Map/components/SchoolMarker';
 import { Checkbox } from '@components/Sidebar/components/Checkbox';
 import {
   MultiRangeSlider,
@@ -66,6 +69,8 @@ interface FilterContextProps {
   filterValues: FilterValues;
   schools: SchoolProps[];
   setSchools: (schools: SchoolProps[]) => void;
+  cities: CityProps[];
+  setCities: (cities: CityProps[]) => void;
   location: Location;
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
   myLocation: boolean;
@@ -98,6 +103,7 @@ function FilterProvider({ children }: FilterProviderProps) {
 
   const [forceUpdate, handleForceUpdate] = useReducer((prev) => !prev, false);
   const [schools, setSchools] = useState<SchoolProps[]>([]);
+  const [cities, setCities] = useState<CityProps[]>([]);
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
   const [location, setLocation] = useState<Location>({} as Location);
   const [myLocation, setMyLocation] = useState<boolean>(true);
@@ -179,6 +185,8 @@ function FilterProvider({ children }: FilterProviderProps) {
       value={{
         schools,
         setSchools,
+        cities,
+        setCities,
         allFilters,
         setAllFilters,
         location,
