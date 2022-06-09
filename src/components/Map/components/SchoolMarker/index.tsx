@@ -23,27 +23,37 @@ export interface SchoolProps {
   nivel_serv_comparado: string;
   porte: number;
   image: string;
+  uf: string;
+}
+
+export interface CityProps {
+  exibicao: string;
+  regiao: string;
+  uf: string;
+  municipio: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface Props {
-  school: SchoolProps;
-  setPopupInfo: React.Dispatch<React.SetStateAction<SchoolProps | null>>;
+  value: SchoolProps | CityProps;
+  onClick: () => void | Promise<void>;
+  color: string;
 }
 
 export function SchoolMarker(props: Props) {
-  const { school, setPopupInfo } = props;
-
+  const { value, onClick, color } = props;
   return (
     <Marker
-      latitude={school.latitude}
-      longitude={school.longitude as unknown as number}
+      latitude={value.latitude}
+      longitude={value.longitude as unknown as number}
       onClick={(e) => {
         e.originalEvent.stopPropagation();
-        setPopupInfo(school);
+        onClick();
       }}
     >
       <SchoolContainer>
-        <AiTwotoneCompass size={16} color="#0064ad" />
+        <AiTwotoneCompass size={16} color={color} />
       </SchoolContainer>
     </Marker>
   );

@@ -3,18 +3,18 @@ import { Popup } from 'react-map-gl';
 
 import { useFilterContext } from '@hooks/useFilterContext';
 
-import { SchoolProps } from '../SchoolMarker';
+import { CityProps, SchoolProps } from '../SchoolMarker';
 import { InfoPopupContainer, PopupContainer } from './styles';
 
 type IdebValues = '2019_ideb_1_5' | '2019_ideb_6_9' | '2019_ideb_em';
 
 interface Props {
   popupInfo: SchoolProps | null;
-  setPopupInfo: React.Dispatch<React.SetStateAction<SchoolProps | null>>;
+  onClose: () => void;
 }
 
 export function SchoolPopup(props: Props) {
-  const { popupInfo, setPopupInfo } = props;
+  const { popupInfo, onClose } = props;
   const { allFilters } = useFilterContext();
 
   function formatCurrency(value: number) {
@@ -65,7 +65,7 @@ export function SchoolPopup(props: Props) {
 
   return (
     <Popup
-      onClose={() => setPopupInfo(null)}
+      onClose={onClose}
       latitude={popupInfo.latitude}
       longitude={popupInfo.longitude as number}
     >
