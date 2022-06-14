@@ -64,7 +64,9 @@ interface FiltersMaps {
 interface Location {
   latitude: number;
   longitude: number;
+  zoom?: number;
 }
+
 interface FilterContextProps {
   filterValues: FilterValues;
   schools: SchoolProps[];
@@ -109,11 +111,17 @@ function FilterProvider({ children }: FilterProviderProps) {
   const [myLocation, setMyLocation] = useState<boolean>(true);
 
   // eslint-disable-next-line prettier/prettier
-  const [filterValues, setFilterValues] = useState<FilterValues>({} as FilterValues);
+  const [filterValues, setFilterValues] = useState<FilterValues>(
+    {} as FilterValues,
+  );
 
   useEffect(() => {
-    const { latitude, longitude } = location;
-    mapRef.current?.flyTo({ center: [longitude, latitude], duration: 1000 });
+    const { latitude, longitude, zoom } = location;
+    mapRef.current?.flyTo({
+      center: [longitude, latitude],
+      duration: 1000,
+      zoom: zoom || 10,
+    });
   }, [location]);
 
   function onChangeFilterValue(

@@ -7,7 +7,10 @@ import {
   VALUE_TYPE,
 } from '@contexts/FilterContext/types';
 
-import { SchoolProps } from '@components/Map/components/SchoolMarker';
+import {
+  CityProps,
+  SchoolProps,
+} from '@components/Map/components/SchoolMarker';
 
 import { IFilterService } from './types';
 import { translate } from './utils/makesure';
@@ -53,7 +56,7 @@ class FiltersService implements IFilterService {
     return data;
   }
 
-  async getCities(ufCode: string) {
+  async getCities(ufCode: string): Promise<CityProps[]> {
     const { data } = await api.get(`maps/municipio?codigo_uf=${ufCode}`);
     return data;
   }

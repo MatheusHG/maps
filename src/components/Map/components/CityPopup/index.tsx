@@ -1,16 +1,23 @@
 import React from 'react';
 import { Popup } from 'react-map-gl';
 
-import { CityProps, SchoolProps } from '../SchoolMarker';
+import { CityProps as ICityProps } from '../Marker';
 import { InfoPopupContainer, PopupContainer } from './styles';
 
+type CityProps = Partial<ICityProps> & {
+  latitude: number;
+  longitude: number;
+};
+
 interface Props {
-  popupInfo: SchoolProps | CityProps | null;
+  popupInfo: CityProps | null;
   onClose: () => void;
 }
 
 export function CityPopup(props: Props) {
   const { popupInfo, onClose } = props;
+
+  console.log('dados do popup', popupInfo);
 
   if (!popupInfo) {
     return null;
@@ -32,7 +39,72 @@ export function CityPopup(props: Props) {
 
         <InfoPopupContainer>
           <span>Evidência auditável</span>
-          <p>Sem informação</p>
+          <p>{popupInfo?.Municipal || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.Estadual || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.Federal || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.Rural || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.Urbana || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.EF || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.['EF, EJA'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+        {/*
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.['EI, EF, EJA'] || 'Sem informação'}</p>
+        </InfoPopupContainer> */}
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.['EF,EM'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.EI || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.['EI, EF'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        {/* <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.EM || 'Sem informação'}</p>
+        </InfoPopupContainer> */}
+
+        {/* <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.['EM,EP'] || 'Sem informação'}</p>
+        </InfoPopupContainer> */}
+
+        <InfoPopupContainer>
+          <span>Evidência auditável</span>
+          <p>{popupInfo?.['Demais combina'] || 'Sem informação'}</p>
         </InfoPopupContainer>
       </PopupContainer>
     </Popup>

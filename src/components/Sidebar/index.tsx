@@ -78,12 +78,20 @@ export function SideBar() {
       const response = await FiltersService.getCities(
         filterValues.codigo_uf.value,
       );
-      setCitiess(response);
 
-      if (response.length > 0) {
+      const normalizedCities = response.map((city) => ({
+        ...city,
+        longitude: Number(city.longitude),
+        latitude: Number(city.latitude),
+      }));
+
+      setCitiess(normalizedCities);
+
+      if (normalizedCities.length > 0) {
         setLocation({
-          latitude: calcLat(response),
-          longitude: calcLong(response) - 0.1,
+          latitude: calcLat(normalizedCities),
+          longitude: calcLong(normalizedCities) - 0.1,
+          zoom: 5,
         });
       }
 
