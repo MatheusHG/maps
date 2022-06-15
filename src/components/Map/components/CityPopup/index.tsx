@@ -38,73 +38,93 @@ export function CityPopup(props: Props) {
         <h2>Resumo</h2>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Quant. Esc. Municipal</span>
           <p>{popupInfo?.Municipal || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Quant. Esc. Estadual</span>
           <p>{popupInfo?.Estadual || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Quant. Esc. Federal</span>
           <p>{popupInfo?.Federal || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Localização Rural</span>
           <p>{popupInfo?.Rural || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Localização Urbana</span>
           <p>{popupInfo?.Urbana || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapa EF</span>
           <p>{popupInfo?.EF || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapas EF, EJA</span>
           <p>{popupInfo?.['EF, EJA'] || 'Sem informação'}</p>
         </InfoPopupContainer>
         {/*
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapas EI, EF, EJA</span>
           <p>{popupInfo?.['EI, EF, EJA'] || 'Sem informação'}</p>
         </InfoPopupContainer> */}
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapas EF,EM</span>
           <p>{popupInfo?.['EF,EM'] || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapas EI</span>
           <p>{popupInfo?.EI || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapas EI, EF</span>
           <p>{popupInfo?.['EI, EF'] || 'Sem informação'}</p>
         </InfoPopupContainer>
 
         {/* <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapa EM</span>
           <p>{popupInfo?.EM || 'Sem informação'}</p>
         </InfoPopupContainer> */}
 
         {/* <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Etapas EM,EP</span>
           <p>{popupInfo?.['EM,EP'] || 'Sem informação'}</p>
         </InfoPopupContainer> */}
 
         <InfoPopupContainer>
-          <span>Evidência auditável</span>
+          <span>Demais Combinações</span>
           <p>{popupInfo?.['Demais combina'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Capacidade 50 matrículas</span>
+          <p>{popupInfo['Capacidade de 50'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Capacidade 200 matrículas</span>
+          <p>{popupInfo?.['Capacidade de 200'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Capacidade 600 matrículas</span>
+          <p>{popupInfo?.['Capacidade de 600'] || 'Sem informação'}</p>
+        </InfoPopupContainer>
+
+        <InfoPopupContainer>
+          <span>Capacidade 1.000 matrículas</span>
+          <p>{popupInfo?.['Capacidade de 1.000'] || 'Sem informação'}</p>
         </InfoPopupContainer>
       </PopupContainer>
     </Popup>
