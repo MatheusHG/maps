@@ -38,7 +38,7 @@ export function Select(props: SelectProps) {
 
   const getValue = () => {
     const filterValue = filterValues[column] as SelectValue;
-    return filterValue?.value || 'DEFAULT VALUE';
+    return filterValue?.value || '';
   };
 
   if (hasNoBox) {
@@ -49,7 +49,7 @@ export function Select(props: SelectProps) {
         small={small}
         onChange={handleSelect}
       >
-        <option value="DEFAULT VALUE">{placeholder}</option>
+        <option value="">{placeholder}</option>
         {items?.map((item: any) => (
           <option key={item.id} value={item[labelProp]}>
             {item[labelProp]}
@@ -62,7 +62,7 @@ export function Select(props: SelectProps) {
   return (
     <Box label={title}>
       <SelectElement value={getValue()} small={small} onChange={handleSelect}>
-        <option value="DEFAULT VALUE">{placeholder}</option>
+        <option value="">{placeholder}</option>
         {items?.map((item: any) => (
           <option key={item.id} value={item[labelProp]}>
             {item[labelProp]}
