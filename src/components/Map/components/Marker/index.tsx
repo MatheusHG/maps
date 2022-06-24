@@ -34,17 +34,29 @@ export interface CityProps {
   latitude: number;
   longitude: number;
   ['Ainda não Fez']: number;
+  Fez: number;
+  Paralisada: number;
+  ['Exclusiva Ativ Compl']: number;
+  ['Exclusiva Atend Espec']: number;
+  ['Exclusiva  Aluno Defic']: number;
   Assentamento: number;
+  ['Sem informa']: number;
+  ['Sem matr']: number;
+  ['Mais de 1.000']: number;
   ['Capacidade de 1.000']: number;
   ['Capacidade de 50']: number;
   ['Capacidade de 200']: number;
   ['Capacidade de 600']: number;
   ['Demais combina']: number;
   EF: number;
+  ['EI, EF, EJA']: number;
   ['EF, EJA']: number;
   ['EF,EM']: number;
+  ['EM, EP']: number;
   EI: number;
+  EM: number;
   ['EI, EF']: number;
+  ['Sem informação']: number;
   Estadual: number;
   Municipal: number;
   Federal: number;
@@ -54,6 +66,7 @@ export interface CityProps {
   Rural: number;
   ['Sem Restri']: number;
   Urbana: number;
+  Indigena: number;
 }
 
 interface Props {
@@ -64,6 +77,11 @@ interface Props {
 
 export function Marker(props: Props) {
   const { value, onClick, color } = props;
+
+  if (Number.isNaN(value.latitude) || Number.isNaN(value.longitude)) {
+    return null;
+  }
+
   return (
     <MapGlMarker
       latitude={value.latitude}
