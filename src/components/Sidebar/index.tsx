@@ -85,6 +85,7 @@ export function SideBar() {
         latitude: Number(city.latitude),
       }));
 
+      setSchools([]);
       setCitiess(normalizedCities);
 
       if (normalizedCities.length > 0) {
@@ -113,6 +114,7 @@ export function SideBar() {
 
     setMyLocation(false);
 
+    setCitiess([]);
     setSchools(response);
   }
   function handleClear() {
