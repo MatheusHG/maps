@@ -7,10 +7,7 @@ import {
   VALUE_TYPE,
 } from '@contexts/FilterContext/types';
 
-import {
-  CityProps,
-  SchoolProps,
-} from '@components/Map/components/SchoolMarker';
+import { CityProps, SchoolProps } from '@components/Map/components/Marker';
 
 import { IFilterService } from './types';
 import { translate } from './utils/makesure';
