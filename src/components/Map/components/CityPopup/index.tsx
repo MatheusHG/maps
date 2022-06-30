@@ -23,6 +23,8 @@ export function CityPopup(props: Props) {
     return null;
   }
 
+  console.log(popupInfo);
+
   return (
     <Popup
       onClose={onClose}

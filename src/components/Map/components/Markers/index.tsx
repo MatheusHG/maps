@@ -31,6 +31,7 @@ export function Markers(props: Props) {
       ...response,
       latitude: value.latitude,
       longitude: value.longitude,
+      municipio: value.municipio,
     });
   }
 
