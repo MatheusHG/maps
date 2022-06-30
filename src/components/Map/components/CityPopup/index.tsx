@@ -17,13 +17,9 @@ interface Props {
 export function CityPopup(props: Props) {
   const { popupInfo, onClose } = props;
 
-  console.log('dados do popup', popupInfo);
-
   if (!popupInfo) {
     return null;
   }
-
-  console.log(popupInfo);
 
   return (
     <Popup
