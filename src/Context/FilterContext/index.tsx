@@ -16,10 +16,7 @@ import {
 } from 'react';
 import { MapRef } from 'react-map-gl';
 
-import {
-  SchoolProps,
-  CityProps,
-} from '@components/Map/components/SchoolMarker';
+import { SchoolProps, CityProps } from '@components/Map/components/Marker';
 import { Checkbox } from '@components/Sidebar/components/Checkbox';
 import {
   MultiRangeSlider,

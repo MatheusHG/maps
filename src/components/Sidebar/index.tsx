@@ -55,7 +55,7 @@ export function SideBar() {
 
   function calcLat(response: any) {
     const latitude = response.reduce(
-      (previousValue, currentValue) =>
+      (previousValue: any, currentValue: any) =>
         previousValue + currentValue.latitude / response.length,
       0,
     );
@@ -65,7 +65,7 @@ export function SideBar() {
 
   function calcLong(response: any) {
     const longitude = response.reduce(
-      (previousValue, currentValue) =>
+      (previousValue: any, currentValue: any) =>
         previousValue + currentValue.longitude / response.length,
       0,
     );
