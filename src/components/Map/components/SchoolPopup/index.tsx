@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Popup } from 'react-map-gl';
+
+import SchoolsService from '@services/Schools';
 
 import { useFilterContext } from '@hooks/useFilterContext';
 
-import { SchoolProps } from '../SchoolMarker';
+import { SchoolProps } from '../Marker';
 import { InfoPopupContainer, PopupContainer } from './styles';
 
 type IdebValues = '2019_ideb_1_5' | '2019_ideb_6_9' | '2019_ideb_em';
 
 interface Props {
   popupInfo: SchoolProps | null;
-  setPopupInfo: React.Dispatch<React.SetStateAction<SchoolProps | null>>;
+  onClose: () => void;
 }
 
 export function SchoolPopup(props: Props) {
-  const { popupInfo, setPopupInfo } = props;
+  const { popupInfo, onClose } = props;
   const { allFilters } = useFilterContext();
+  const [img, setImg] = useState<string>('');
+
+  async function getImage() {
+    const imageUrl = await SchoolsService.getSchoolImage({
+      codigo_uf: popupInfo?.codigo_uf,
+      municipio: popupInfo?.municipio,
+      escola: popupInfo?.escola,
+    });
+    setImg(imageUrl);
+  }
+
+  useEffect(() => {
+    if (popupInfo) {
+      getImage();
+    }
+  }, [popupInfo]);
 
   function formatCurrency(value: number) {
     return (
@@ -65,15 +83,12 @@ export function SchoolPopup(props: Props) {
 
   return (
     <Popup
-      onClose={() => setPopupInfo(null)}
+      onClose={onClose}
       latitude={popupInfo.latitude}
       longitude={popupInfo.longitude as number}
     >
       <PopupContainer>
-        <img
-          src="https://user-images.githubusercontent.com/56003521/165186523-9a2207a9-db8e-4a56-9679-270a78e70e0a.png"
-          alt="schoolImage"
-        />
+        <img src={img} alt="schoolImage" />
 
         <h2>{popupInfo.escola || 'Sem informação'}</h2>
 

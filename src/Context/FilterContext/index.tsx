@@ -16,7 +16,7 @@ import {
 } from 'react';
 import { MapRef } from 'react-map-gl';
 
-import { SchoolProps } from '@components/Map/components/SchoolMarker';
+import { SchoolProps, CityProps } from '@components/Map/components/Marker';
 import { Checkbox } from '@components/Sidebar/components/Checkbox';
 import {
   MultiRangeSlider,
@@ -61,11 +61,15 @@ interface FiltersMaps {
 interface Location {
   latitude: number;
   longitude: number;
+  zoom?: number;
 }
+
 interface FilterContextProps {
   filterValues: FilterValues;
   schools: SchoolProps[];
   setSchools: (schools: SchoolProps[]) => void;
+  cities: CityProps[];
+  setCities: (cities: CityProps[]) => void;
   location: Location;
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
   myLocation: boolean;
@@ -98,16 +102,23 @@ function FilterProvider({ children }: FilterProviderProps) {
 
   const [forceUpdate, handleForceUpdate] = useReducer((prev) => !prev, false);
   const [schools, setSchools] = useState<SchoolProps[]>([]);
+  const [cities, setCities] = useState<CityProps[]>([]);
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
   const [location, setLocation] = useState<Location>({} as Location);
   const [myLocation, setMyLocation] = useState<boolean>(true);
 
   // eslint-disable-next-line prettier/prettier
-  const [filterValues, setFilterValues] = useState<FilterValues>({} as FilterValues);
+  const [filterValues, setFilterValues] = useState<FilterValues>(
+    {} as FilterValues,
+  );
 
   useEffect(() => {
-    const { latitude, longitude } = location;
-    mapRef.current?.flyTo({ center: [longitude, latitude], duration: 1000 });
+    const { latitude, longitude, zoom } = location;
+    mapRef.current?.flyTo({
+      center: [longitude, latitude],
+      duration: 1000,
+      zoom: zoom || 10,
+    });
   }, [location]);
 
   function onChangeFilterValue(
@@ -179,6 +190,8 @@ function FilterProvider({ children }: FilterProviderProps) {
       value={{
         schools,
         setSchools,
+        cities,
+        setCities,
         allFilters,
         setAllFilters,
         location,

@@ -8,7 +8,7 @@ import ReactMapGl, {
 
 import { useFilterContext } from '@hooks/useFilterContext';
 
-import { Schools } from './components/Schools';
+import { Markers } from './components/Markers';
 
 const MAP_TOKEN =
   'pk.eyJ1IjoicGlsYWIiLCJhIjoiY2wweTQwMzZ3MGU4eTNjazF1Z290bmljcyJ9.ihIhhD4xNC2xtGCgn9uoVw';
@@ -27,7 +27,7 @@ const style = {
 };
 
 export function Map() {
-  const { schools, mapRef, myLocation } = useFilterContext();
+  const { schools, mapRef, myLocation, cities } = useFilterContext();
 
   function LightOrDark() {
     const date = new Date();
@@ -53,7 +53,10 @@ export function Map() {
       <NavigationControl position="top-right" />
       <ScaleControl position="bottom-right" />
 
-      <Schools schools={schools} />
+      <Markers
+        values={!cities.length ? schools : cities}
+        query={!cities.length ? 'school' : 'cities'}
+      />
     </ReactMapGl>
   );
 }
