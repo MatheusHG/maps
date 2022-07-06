@@ -55,8 +55,11 @@ export function SideBar() {
 
   function calcLat(response: any) {
     const latitude = response.reduce(
-      (previousValue: any, currentValue: any) =>
-        previousValue + currentValue.latitude / response.length,
+      (previousValue: any, currentValue: any) => {
+        return Number.isNaN(Number(currentValue.latitude))
+          ? previousValue + 0
+          : previousValue + currentValue.latitude / response.length;
+      },
       0,
     );
 
@@ -65,8 +68,11 @@ export function SideBar() {
 
   function calcLong(response: any) {
     const longitude = response.reduce(
-      (previousValue: any, currentValue: any) =>
-        previousValue + currentValue.longitude / response.length,
+      (previousValue: any, currentValue: any) => {
+        return Number.isNaN(currentValue.longitude)
+          ? previousValue + 0
+          : previousValue + currentValue.longitude / response.length;
+      },
       0,
     );
 
