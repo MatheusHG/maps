@@ -77,7 +77,6 @@ interface Props {
 
 export function Marker(props: Props) {
   const { value, onClick, color } = props;
-
   if (
     Number.isNaN(Number(value.latitude)) ||
     Number.isNaN(Number(value.longitude))
