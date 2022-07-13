@@ -7,6 +7,8 @@ import {
   VALUE_TYPE,
 } from '@contexts/FilterContext/types';
 
+import { removeSpecialChars } from '@utils/dataFunctions';
+
 import { CityProps, SchoolProps } from '@components/Map/components/Marker';
 
 import { IFilterService } from './types';
@@ -18,7 +20,9 @@ class FiltersService implements IFilterService {
       const column = key as keyof FilterValues;
 
       if (filterValues[column].type === VALUE_TYPE.SELECT) {
-        return `filter[${column}]=${filterValues[column].value}&`;
+        return `filter[${column}]=${removeSpecialChars(
+          filterValues[column].value as string,
+        )}&`;
       }
 
       if (filterValues[column].type === VALUE_TYPE.SLIDER) {
@@ -54,13 +58,17 @@ class FiltersService implements IFilterService {
   }
 
   async getCities(ufCode: string): Promise<CityProps[]> {
-    const { data } = await api.get(`maps/municipio?codigo_uf=${ufCode}`);
+    const { data } = await api.get(
+      `maps/municipio?codigo_uf=${removeSpecialChars(ufCode)}`,
+    );
     return data;
   }
 
   async getStateResume(ufCode: string, cityName: string) {
     const { data } = await api.get(
-      `maps/abstract?codigo_uf=${ufCode}&nome_municipio=${cityName}`,
+      `maps/abstract?codigo_uf=${removeSpecialChars(
+        ufCode,
+      )}&nome_municipio=${removeSpecialChars(cityName)}`,
     );
     return data;
   }
