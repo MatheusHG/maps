@@ -36,9 +36,6 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-bind": "off",
     "linebreak-style": 0,
-    "no-confusing-arrow": ["error", {
-      "allowParens": true
-    }],
     "arrow-parens": 0,
     "max-len": [
       "error",

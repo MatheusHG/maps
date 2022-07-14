@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { FiEdit, FiSave } from 'react-icons/fi';
 import { Popup } from 'react-map-gl';
 
 import SchoolsService from '@services/Schools';
@@ -6,19 +8,21 @@ import SchoolsService from '@services/Schools';
 import { useFilterContext } from '@hooks/useFilterContext';
 
 import { SchoolProps } from '../Marker';
-import { InfoPopupContainer, PopupContainer } from './styles';
+import { ButtonEdit, InfoPopupContainer, PopupContainer } from './styles';
 
 type IdebValues = '2019_ideb_1_5' | '2019_ideb_6_9' | '2019_ideb_em';
 
 interface Props {
   popupInfo: SchoolProps | null;
+  setPopupInfo: Dispatch<SetStateAction<SchoolProps>> | SchoolProps;
   onClose: () => void;
 }
 
 export function SchoolPopup(props: Props) {
-  const { popupInfo, onClose } = props;
+  const { popupInfo, setPopupInfo, onClose } = props;
   const { allFilters } = useFilterContext();
   const [img, setImg] = useState<string>('');
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   async function getImage() {
     const imageUrl = await SchoolsService.getSchoolImage({
@@ -46,11 +50,13 @@ export function SchoolPopup(props: Props) {
     );
   }
 
+  // formatCurrency(Number(popupInfo.custo));
+
   function renderMaxIdeb() {
     const formatIdeb = (ideb: string) => {
       return ideb ? Number(ideb.replace(',', '.')) : 0;
     };
-
+    console.log('aqui ', allFilters?.adesao);
     const getMaxIdeb = () => {
       const idebsLabels = [
         '2019_ideb_1_5',
@@ -81,66 +87,134 @@ export function SchoolPopup(props: Props) {
     return null;
   }
 
+  function handleClose() {
+    setIsEdit(false);
+    onClose();
+  }
+
   return (
     <Popup
-      onClose={onClose}
+      onClose={handleClose}
       latitude={popupInfo.latitude}
       longitude={popupInfo.longitude as number}
     >
       <PopupContainer>
         <img src={img} alt="schoolImage" />
 
-        <h2>{popupInfo.escola || 'Sem informação'}</h2>
+        <InfoPopupContainer>
+          {isEdit ? (
+            <input value={popupInfo.escola} disabled={!isEdit} />
+          ) : (
+            <h2>{popupInfo.escola}</h2>
+          )}
+        </InfoPopupContainer>
 
         {renderMaxIdeb()}
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Evidência auditável</span>
-          <p>{popupInfo.evid_audit || 'Sem informação'}</p>
+          <input
+            value={popupInfo.evid_audit || 'Sem informação'}
+            disabled={!isEdit}
+          />
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Custo total</span>
-          {formatCurrency(Number(popupInfo.custo))}
+          <input value={Number(popupInfo!.custo)} disabled={!isEdit} />
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Nível de serviço</span>
-          <p>{popupInfo.nivel_serv_comparado || 'Sem informação'}</p>
+          <input
+            value={popupInfo.nivel_serv_comparado || 'Sem informação'}
+            disabled={!isEdit}
+          />
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Localização</span>
-          <p>{allFilters?.localizacao[popupInfo.localizacao - 1]?.name}</p>
+          <select
+            value={allFilters?.localizacao[popupInfo.localizacao - 1]?.name}
+            disabled={!isEdit}
+          >
+            {allFilters?.localizacao.map((item: any) => {
+              return <option value={item?.name}>{item?.name}</option>;
+            })}
+          </select>
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Etapas e Modalidade</span>
-          <p>{allFilters?.etapas[popupInfo.etapas - 1]?.name}</p>
+          <select
+            value={allFilters?.etapas[popupInfo.etapas - 1]?.name}
+            disabled={!isEdit}
+          >
+            {allFilters?.etapas.map((item: any) => {
+              return <option value={item?.name}>{item?.name}</option>;
+            })}
+          </select>
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Porte de Matrícula</span>
-          <p>{allFilters?.porte[popupInfo.porte - 1]?.name}</p>
+          <select
+            value={allFilters?.porte[popupInfo.porte - 1]?.name}
+            disabled={!isEdit}
+          >
+            {allFilters?.porte.map((item: any) => {
+              return <option value={item?.name}>{item?.name}</option>;
+            })}
+          </select>
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Restrição de Atendimentoa</span>
-          <p>{allFilters?.atendimento[popupInfo.atendimento - 1]?.name}</p>
+          <select
+            value={allFilters?.atendimento[popupInfo.atendimento - 1]?.name}
+            disabled={!isEdit}
+          >
+            {allFilters?.atendimento.map((item: any) => {
+              return <option value={item?.name}>{item?.name}</option>;
+            })}
+          </select>
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Localidade Diferenciada</span>
-          <p>
-            {allFilters?.caracteristica[popupInfo.caracteristica - 1]?.name}
-          </p>
+          <select
+            value={
+              allFilters?.caracteristica[popupInfo.caracteristica - 1]?.name
+            }
+            disabled={!isEdit}
+          >
+            {allFilters?.caracteristica.map((item: any) => {
+              return <option value={item?.name}>{item?.name}</option>;
+            })}
+          </select>
         </InfoPopupContainer>
 
-        <InfoPopupContainer>
+        <InfoPopupContainer inputDisable={isEdit}>
           <span>Adesão</span>
-          <p>{allFilters?.adesao[popupInfo.adesao - 1]?.name}</p>
+          <select
+            value={allFilters?.adesao[popupInfo.adesao - 1]?.name}
+            disabled={!isEdit}
+          >
+            {allFilters?.adesao.map((item: any) => {
+              return <option value={item?.name}>{item?.name}</option>;
+            })}
+          </select>
         </InfoPopupContainer>
       </PopupContainer>
+      {isEdit ? (
+        <ButtonEdit onClick={() => setIsEdit(false)}>
+          <FiSave size={16} color="#FFF" />
+        </ButtonEdit>
+      ) : (
+        <ButtonEdit onClick={() => setIsEdit(true)}>
+          <FiEdit size={16} color="#FFF" />
+        </ButtonEdit>
+      )}
     </Popup>
   );
 }
