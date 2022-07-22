@@ -4,5 +4,6 @@ import { SchoolProps } from '@components/Map/components/Marker';
 
 export interface IFilterService {
   generateQueryString(filterValues: FilterValues): string;
-  searchByFilters(queryString: string): Promise<SchoolProps[]>;
+  searchByFiltersPublic(queryString: string): Promise<SchoolProps[]>;
+  searchByFiltersPrivate(queryString: string): Promise<SchoolProps[]>;
 }

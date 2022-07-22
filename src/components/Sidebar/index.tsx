@@ -114,7 +114,10 @@ export function SideBar() {
 
     const queryString = FiltersService.generateQueryString(filterValues);
     // const sql = FiltersService.generateSQL(queryString);
-    const response = await FiltersService.searchByFilters(queryString);
+
+    const response = isAdmin
+      ? await FiltersService.searchByFiltersPrivate(queryString)
+      : await FiltersService.searchByFiltersPublic(queryString);
 
     if (response.length > 0) {
       setLocation({

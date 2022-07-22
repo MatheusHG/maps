@@ -1,3 +1,4 @@
+import QueryString from 'qs';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import FiltersService from '@services/Filters';
@@ -12,6 +13,11 @@ interface Props {
 }
 
 export function Markers(props: Props) {
+  const access = QueryString.parse(window.location.search, {
+    ignoreQueryPrefix: true,
+  });
+  const isAdmin = (Object.keys(access)[0] === 'admin') as boolean;
+
   const { values, query } = props;
   const [popupInfo, setPopupInfo] = useState<SchoolProps | CityProps | null>(
     null,
@@ -22,10 +28,9 @@ export function Markers(props: Props) {
   }
 
   async function getResume(value: CityProps | SchoolProps) {
-    const response = await FiltersService.getStateResume(
-      value?.uf,
-      value?.municipio,
-    );
+    const response = isAdmin
+      ? await FiltersService.getStateResumePrivate(value?.uf, value?.municipio)
+      : await FiltersService.getStateResumePublic(value?.uf, value?.municipio);
 
     setPopupInfo({
       ...response,
