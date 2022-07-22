@@ -11,10 +11,10 @@ import {
 import { useFilterContext } from '@hooks/useFilterContext';
 
 import { Box } from '../Box';
-import { CheckBox, Content, Label } from './styles';
+import { CheckBox, Content, Label, Test, ButtonTest } from './styles';
 
 export function Checkbox(props: CheckboxProps) {
-  const { title, items, column, isLocked } = props;
+  const { title, items, column, isLocked, isAdmin } = props;
 
   const { filterValues, onChangeFilterValue } = useFilterContext();
 
@@ -43,19 +43,23 @@ export function Checkbox(props: CheckboxProps) {
 
   return (
     <Box label={title} isLocked={isLocked}>
-      <>
+      <Test isAdmin={isAdmin}>
         {items?.map(({ id, name, ...rest }) => (
           <Content key={id}>
             <CheckBox
               value={id}
               checked={isChecked(name)}
               onChange={(event) => handleChecked(event, id, name)}
+              disabled={!isAdmin}
               {...rest}
             />
             <Label>{name}</Label>
           </Content>
         ))}
-      </>
+      </Test>
+      <ButtonTest isAdmin={isAdmin} href="google.com">
+        Faça a adesão
+      </ButtonTest>
     </Box>
   );
 }

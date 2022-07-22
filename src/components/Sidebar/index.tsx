@@ -1,3 +1,5 @@
+import assert from 'assert';
+import qs from 'qs';
 import { useEffect, useMemo, useState } from 'react';
 import { BiArrowFromRight } from 'react-icons/bi';
 
@@ -13,6 +15,9 @@ import { Container, Content, CloseLabel } from './style';
 
 export function SideBar() {
   const { allFilters, setAllFilters, setMyLocation } = useFilterContext();
+
+  const access = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const isAdmin = (Object.keys(access)[0] === 'admin') as boolean;
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [firstFilter, setFirstFilter] = useState<boolean>(true);
@@ -117,12 +122,12 @@ export function SideBar() {
         longitude: calcLong(response) - 0.1,
       });
     }
-
     setMyLocation(false);
 
     setCitiess([]);
     setSchools(response);
   }
+
   function handleClear() {
     clearFilters();
     setFirstFilter((prev) => !prev);
@@ -173,42 +178,49 @@ export function SideBar() {
             column: 'dependencia',
             items: allFilters?.dependencia,
             isLocked,
+            isAdmin,
           },
           {
             title: 'Localização',
             column: 'localizacao',
             items: allFilters?.localizacao,
             isLocked,
+            isAdmin,
           },
           {
             title: 'Etapas e Modalidade',
             column: 'etapas',
             items: allFilters?.etapas,
             isLocked,
+            isAdmin,
           },
           {
             title: 'Porte de Matrícula',
             column: 'porte',
             items: allFilters?.porte,
             isLocked,
+            isAdmin,
           },
           {
             title: 'Restrição de Atendimento',
             column: 'atendimento',
             items: allFilters?.atendimento,
             isLocked,
+            isAdmin,
           },
           {
             title: 'Localidade Diferenciada',
             column: 'caracteristica',
             items: allFilters?.caracteristica,
             isLocked,
+            isAdmin,
           },
           {
             title: 'Adesao',
             column: 'adesao',
             items: allFilters?.adesao,
             isLocked,
+            isAdmin,
           },
         ],
         multipleSliders: [
@@ -235,7 +247,7 @@ export function SideBar() {
         ],
       } as Filters),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [forceUpdate, allFilters, states, cities, firstFilter, isLocked],
+    [forceUpdate, allFilters, states, cities, firstFilter, isLocked, isAdmin],
   );
   return (
     <>
