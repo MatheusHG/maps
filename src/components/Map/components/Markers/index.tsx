@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import FiltersService from '@services/Filters';
 
+import AccessionModal from '@components/AccessionModal';
+
 import { CityPopup } from '../CityPopup';
 import { Marker, SchoolProps, CityProps } from '../Marker';
 import { SchoolPopup } from '../SchoolPopup';
@@ -13,6 +15,8 @@ interface Props {
 }
 
 export function Markers(props: Props) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const access = QueryString.parse(window.location.search, {
     ignoreQueryPrefix: true,
   });
@@ -27,10 +31,24 @@ export function Markers(props: Props) {
     setPopupInfo(null);
   }
 
-  async function getResume(value: CityProps | SchoolProps) {
+  function setSchoolInfo(value: SchoolProps) {
+    if (!value?.adesao) {
+      setIsModalOpen(true);
+      return;
+    }
+
+    setPopupInfo(value);
+  }
+
+  async function getResume(value: CityProps) {
     const response = isAdmin
       ? await FiltersService.getStateResumePrivate(value?.uf, value?.municipio)
       : await FiltersService.getStateResumePublic(value?.uf, value?.municipio);
+
+    if (!response?.adesao) {
+      setIsModalOpen(true);
+      return;
+    }
 
     setPopupInfo({
       ...response,
@@ -41,7 +59,9 @@ export function Markers(props: Props) {
   }
 
   function getOnClick(value: CityProps | SchoolProps) {
-    return query === 'school' ? setPopupInfo(value) : getResume(value);
+    setPopupInfo(null);
+
+    return query === 'school' ? setSchoolInfo(value) : getResume(value);
   }
 
   return (
@@ -61,6 +81,11 @@ export function Markers(props: Props) {
       ) : (
         <CityPopup popupInfo={popupInfo} onClose={clearPopupInfo} />
       )}
+
+      <AccessionModal
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }
