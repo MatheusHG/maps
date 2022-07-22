@@ -14,25 +14,21 @@ export const CheckboxContainer = styled.div`
   /* margin-bottom: 2rem; */
 `;
 
-export const Test = styled.div.attrs(({ isAdmin }: any) => ({
-  isAdmin,
-}))`
-  background-color: ${({ isAdmin }) => !isAdmin && '#94949457'};
-  z-index: 999;
-  /* opacity: ${({ isAdmin }) => !isAdmin && '0.4'}; */
-  padding: ${({ isAdmin }) => !isAdmin && '5px'};
-  position: relative;
+export const Test = styled.div`
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  backdrop-filter: blur(1px);
+  width: 100%;
+  height: 100%;
+  top: -1.45rem;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 4px;
 `;
 
-export const ButtonTest = styled.a.attrs(({ isAdmin }: any) => ({
-  isAdmin,
-}))`
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
+export const ButtonTest = styled.a`
   cursor: pointer;
   text-decoration: none;
   font-size: 14px;

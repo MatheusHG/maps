@@ -229,6 +229,7 @@ export function SideBar() {
             min: 0,
             max: 10,
             isLocked,
+            isAdmin,
             items: [
               {
                 column: '2019_ideb_1_5',

@@ -43,7 +43,7 @@ export function Checkbox(props: CheckboxProps) {
 
   return (
     <Box label={title} isLocked={isLocked}>
-      <Test isAdmin={isAdmin}>
+      <div>
         {items?.map(({ id, name, ...rest }) => (
           <Content key={id}>
             <CheckBox
@@ -56,10 +56,13 @@ export function Checkbox(props: CheckboxProps) {
             <Label>{name}</Label>
           </Content>
         ))}
-      </Test>
-      <ButtonTest isAdmin={isAdmin} href="google.com">
-        Faça a adesão
-      </ButtonTest>
+
+        {!isAdmin && (
+          <Test>
+            <ButtonTest href="/google.com">Faça a adesão</ButtonTest>
+          </Test>
+        )}
+      </div>
     </Box>
   );
 }
