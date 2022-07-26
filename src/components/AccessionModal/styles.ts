@@ -13,7 +13,7 @@ export const Container = styled.div`
   justify-content: center;
 
   backdrop-filter: 1px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 export const Close = styled.button`
@@ -56,7 +56,11 @@ export const Title = styled.h3`
 
 export const Description = styled.p`
   font-size: 1.2rem;
-  text-align: center;
+
+  strong {
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export const Footer = styled.footer`
@@ -65,7 +69,6 @@ export const Footer = styled.footer`
 
 export const Link = styled.a`
   color: ${({ theme }) => theme.colors.primary};
-  border-radius: 0.4rem;
   font-size: 1.2rem;
   font-weight: bold;
 

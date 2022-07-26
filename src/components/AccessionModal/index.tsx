@@ -35,16 +35,21 @@ const AccessionModal: FC<Props> = (props) => {
         <Title>Atenção</Title>
 
         <Description>
-          Para ter acesso a esses dados você deve acessar pelo{' '}
-          <Link href="https://www.sicgesp.com.br" target="_blank">
-            SICGESP
-          </Link>{' '}
-          ou o município já deve ter adesão.
+          Precisamos da adesão da Secretaria de Educação ao projeto Sala de
+          Gestão e Governança para que possamos compartilhar os dados de custos
+          e também algumas informações sobre as escolas do seu municipio.
+          <br />
+          <br />A adesão ao projeto é <strong>SEM CUSTOS</strong> para o
+          município e o objetivo do projeto é melhorar a comunicação das
+          secretarias de educação com a <strong>SEB/MEC</strong>.
         </Description>
 
         <Footer>
-          <Link href="https://google.com" target="_blank">
-            Fazer adesão
+          <Link
+            href="https://www.projetosalasebunb.com.br/adesao"
+            target="_blank"
+          >
+            Faça sua adesão clicando aqui.
           </Link>
         </Footer>
       </Content>
