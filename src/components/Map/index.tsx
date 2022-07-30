@@ -29,16 +29,6 @@ const style = {
 export function Map() {
   const { schools, mapRef, myLocation, cities } = useFilterContext();
 
-  function LightOrDark() {
-    const date = new Date();
-    const Hours = date.getHours();
-
-    let theme = 'streets-v11';
-    if (Hours >= 18 || Hours < 5) theme = 'dark-v10';
-
-    return theme;
-  }
-
   return (
     <ReactMapGl
       ref={mapRef}
@@ -46,7 +36,7 @@ export function Map() {
       initialViewState={initialViewState}
       style={style}
       mapboxAccessToken={MAP_TOKEN}
-      mapStyle={`mapbox://styles/mapbox/${LightOrDark()}`}
+      mapStyle="mapbox://styles/mapbox/streets-v11"
     >
       {myLocation && <GeolocateControl position="top-right" />}
       <FullscreenControl position="top-right" />

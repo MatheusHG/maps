@@ -64,7 +64,7 @@ class FiltersService implements IFilterService {
     return data;
   }
 
-  async getStateResume(ufCode: string, cityName: string) {
+  async getStateResumePublic(ufCode: string, cityName: string) {
     const { data } = await api.get(
       `maps/abstract?codigo_uf=${removeSpecialChars(
         ufCode,
@@ -73,8 +73,25 @@ class FiltersService implements IFilterService {
     return data;
   }
 
-  async searchByFilters(queryString: string) {
+  async getStateResumePrivate(ufCode: string, cityName: string) {
+    const { data } = await api.get(
+      `maps/abstract/private?codigo_uf=${removeSpecialChars(
+        ufCode,
+      )}&nome_municipio=${removeSpecialChars(cityName)}`,
+    );
+    return data;
+  }
+
+  async searchByFiltersPublic(queryString: string) {
     const { data } = await api.post<SchoolProps[]>('maps', { queryString });
+
+    return data;
+  }
+
+  async searchByFiltersPrivate(queryString: string) {
+    const { data } = await api.post<SchoolProps[]>('maps/private', {
+      queryString,
+    });
 
     return data;
   }
