@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiEdit, FiSave } from 'react-icons/fi';
 import { Popup } from 'react-map-gl';
 
@@ -14,41 +14,40 @@ type IdebValues = '2019_ideb_1_5' | '2019_ideb_6_9' | '2019_ideb_em';
 
 interface Props {
   popupInfo: SchoolProps | null;
-  setPopupInfo: Dispatch<SetStateAction<SchoolProps>> | SchoolProps;
   onClose: () => void;
 }
 
 export function SchoolPopup(props: Props) {
-  const { popupInfo, setPopupInfo, onClose } = props;
+  const { popupInfo, onClose } = props;
   const { allFilters } = useFilterContext();
   const [img, setImg] = useState<string>('');
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
-  async function getImage() {
-    const imageUrl = await SchoolsService.getSchoolImage({
-      codigo_uf: popupInfo?.codigo_uf,
-      municipio: popupInfo?.municipio,
-      escola: popupInfo?.escola,
-    });
-    setImg(imageUrl);
-  }
-
   useEffect(() => {
+    async function getImage() {
+      const imageUrl = await SchoolsService.getSchoolImage({
+        codigo_uf: popupInfo?.codigo_uf,
+        municipio: popupInfo?.municipio,
+        escola: popupInfo?.escola,
+      });
+      setImg(imageUrl);
+    }
+
     if (popupInfo) {
       getImage();
     }
   }, [popupInfo]);
 
-  function formatCurrency(value: number) {
-    return (
-      <p>
-        {value?.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
-        })}
-      </p>
-    );
-  }
+  // function formatCurrency(value: number) {
+  //   return (
+  //     <p>
+  //       {value?.toLocaleString('pt-br', {
+  //         style: 'currency',
+  //         currency: 'BRL',
+  //       })}
+  //     </p>
+  //   );
+  // }
 
   // formatCurrency(Number(popupInfo.custo));
 
@@ -56,7 +55,6 @@ export function SchoolPopup(props: Props) {
     const formatIdeb = (ideb: string) => {
       return ideb ? Number(ideb.replace(',', '.')) : 0;
     };
-    console.log('aqui ', allFilters?.adesao);
     const getMaxIdeb = () => {
       const idebsLabels = [
         '2019_ideb_1_5',

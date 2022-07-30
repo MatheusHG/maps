@@ -61,7 +61,15 @@ export function Markers(props: Props) {
   function getOnClick(value: CityProps | SchoolProps) {
     setPopupInfo(null);
 
-    return query === 'school' ? setSchoolInfo(value) : getResume(value);
+    return query === 'school'
+      ? (() => {
+          const popupValue = value as SchoolProps;
+          setSchoolInfo(popupValue);
+        })()
+      : (async () => {
+          const popupValue = value as CityProps;
+          await getResume(popupValue);
+        })();
   }
 
   return (
