@@ -152,7 +152,7 @@ export function SideBar() {
       ({
         multipleSelects: [
           {
-            title: 'Cidade / Estado',
+            title: 'Estado / Cidade',
             items: [
               {
                 placeholder: 'UF',
