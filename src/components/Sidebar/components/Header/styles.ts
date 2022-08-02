@@ -33,7 +33,7 @@ export const Title = styled.h1`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 39px;
 
   color: #0064ad;
