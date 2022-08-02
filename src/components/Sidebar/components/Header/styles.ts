@@ -26,6 +26,10 @@ export const HeaderStyled = styled.header<{ searchIsLocked?: boolean }>`
       filter: ${({ searchIsLocked }) =>
         searchIsLocked ? 'brightness(1)' : 'brightness(0.8)'};
     }
+
+    :nth-child(2) {
+      color: #d60000;
+    }
   }
 `;
 
