@@ -10,6 +10,7 @@ import {
 import { useFilterContext } from '@hooks/useFilterContext';
 
 import { Box } from '../Box';
+import { ButtonTest, Test } from '../Checkbox/styles';
 import {
   ContentFilter,
   InputText,
@@ -104,7 +105,7 @@ export function RangeSlider(props: RangeProps) {
 }
 
 export function MultiRangeSlider(props: MultipleRangeProps) {
-  const { title, min, max, items, isLocked } = props;
+  const { title, min, max, items, isLocked, isAdmin } = props;
 
   const renderRangeSlider = (rangeSlider: RangeProps) => {
     const finalMin = rangeSlider.min || min;
@@ -124,7 +125,14 @@ export function MultiRangeSlider(props: MultipleRangeProps) {
 
   return (
     <Box label={title} isLocked={isLocked}>
-      <Content>{items.map(renderRangeSlider)}</Content>
+      <>
+        <Content>{items.map(renderRangeSlider)}</Content>
+        {!isAdmin && (
+          <Test>
+            <ButtonTest href="/google.com">Faça a adesão</ButtonTest>
+          </Test>
+        )}
+      </>
     </Box>
   );
 }
