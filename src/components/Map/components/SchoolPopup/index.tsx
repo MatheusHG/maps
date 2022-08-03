@@ -204,7 +204,7 @@ export function SchoolPopup(props: Props) {
           </select>
         </InfoPopupContainer>
       </PopupContainer>
-      {isEdit ? (
+      {/* {isEdit ? (
         <ButtonEdit onClick={() => setIsEdit(false)}>
           <FiSave size={16} color="#FFF" />
         </ButtonEdit>
@@ -212,7 +212,7 @@ export function SchoolPopup(props: Props) {
         <ButtonEdit onClick={() => setIsEdit(true)}>
           <FiEdit size={16} color="#FFF" />
         </ButtonEdit>
-      )}
+      )} */}
     </Popup>
   );
 }
