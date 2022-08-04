@@ -9,15 +9,15 @@ export function formatNumber(number: number) {
 export function removeSpecialChars(string: string) {
   return string
     .replace(/[àáâãäå]/, 'a')
-    .replace(/[ÀÁÂÃÄÅ]/, 'A')
+    .replace(/[ÀÁÂÃÄÅ]/, 'a')
     .replace(/[èéêẽë]/, 'e')
-    .replace(/[ÈÉÊẼË]/, 'E')
+    .replace(/[ÈÉÊẼË]/, 'e')
     .replace(/[ìíîĩï]/, 'i')
-    .replace(/[ÌÍÎĨÏ]/, 'I')
+    .replace(/[ÌÍÎĨÏ]/, 'i')
     .replace(/[òóôõö]/, 'o')
-    .replace(/[ÒÓÔÕÖ]/, 'O')
+    .replace(/[ÒÓÔÕÖ]/, 'o')
     .replace(/[ùúûũü]/, 'u')
-    .replace(/[ÙÚÛŨÜ]/, 'U')
+    .replace(/[ÙÚÛŨÜ]/, 'u')
     .replace(/[ç]/, 'c')
     .replace(/[Ç]/, 'C');
 }
