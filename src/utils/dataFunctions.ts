@@ -20,5 +20,5 @@ export function removeSpecialChars(string: string) {
     .replace(/[ÙÚÛŨÜ]/, 'u')
     .replace(/[ç]/, 'c')
     .replace(/[Ç]/, 'C')
-    .replace(/[']/, '');
+    .replace(/[']/, ' ');
 }
