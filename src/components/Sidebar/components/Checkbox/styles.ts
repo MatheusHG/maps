@@ -28,12 +28,25 @@ export const Test = styled.div`
   border-radius: 4px;
 `;
 
-export const ButtonTest = styled.a`
+export const ButtonAccession = styled.a`
   cursor: pointer;
   text-decoration: none;
-  font-size: 14px;
-  color: #000;
-  font-weight: bold;
+
+  p {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.4rem;
+    color: #000;
+    padding: 6px;
+
+    span {
+      b {
+        :last-child {
+          color: #0064ad;
+        }
+      }
+    }
+  }
 `;
 
 export const CheckBox = styled.input.attrs(({ type, value }) => ({

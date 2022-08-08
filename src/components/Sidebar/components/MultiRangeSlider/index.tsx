@@ -10,7 +10,7 @@ import {
 import { useFilterContext } from '@hooks/useFilterContext';
 
 import { Box } from '../Box';
-import { ButtonTest, Test } from '../Checkbox/styles';
+import { ButtonAccession, Test } from '../Checkbox/styles';
 import {
   ContentFilter,
   InputText,
@@ -129,7 +129,24 @@ export function MultiRangeSlider(props: MultipleRangeProps) {
         <Content>{items.map(renderRangeSlider)}</Content>
         {!isAdmin && (
           <Test>
-            <ButtonTest href="/google.com">Faça a adesão</ButtonTest>
+            <ButtonAccession
+              href="https://www.projetosalasebunb.com.br/adesao"
+              target="_blank"
+            >
+              <p>
+                <span>
+                  Os municípios terão acesso aos filtros por categoria na sua
+                  sala individual de gestão e governança.
+                </span>
+                <span>
+                  Venha participar do projeto! A adesão é <b>SEM CUSTOS</b> para
+                  o município.
+                </span>
+                <span>
+                  Faça sua adesão <b>clicando aqui</b>.
+                </span>
+              </p>
+            </ButtonAccession>
           </Test>
         )}
       </>
