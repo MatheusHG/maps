@@ -26,6 +26,7 @@ export const BlockBox = styled.div`
 
 export const Filters = styled.div`
   margin: 0.8rem 0;
+  position: relative;
 `;
 
 export const Label = styled.p`

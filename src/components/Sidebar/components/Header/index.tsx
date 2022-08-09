@@ -14,7 +14,7 @@ export function Header(props: Props) {
 
   return (
     <HeaderStyled>
-      <Title>Filtros</Title>
+      <Title>Escolas</Title>
       <div>
         <button type="button" onClick={onClear}>
           Limpar

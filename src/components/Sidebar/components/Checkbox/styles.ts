@@ -14,12 +14,48 @@ export const CheckboxContainer = styled.div`
   /* margin-bottom: 2rem; */
 `;
 
+export const Test = styled.div`
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  backdrop-filter: blur(1px);
+  width: 100%;
+  height: 100%;
+  top: -1.45rem;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+`;
+
+export const ButtonAccession = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+
+  p {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.4rem;
+    color: #000;
+    padding: 6px;
+
+    span {
+      b {
+        :last-child {
+          color: #0064ad;
+        }
+      }
+    }
+  }
+`;
+
 export const CheckBox = styled.input.attrs(({ type, value }) => ({
   value,
   type: 'checkbox',
 }))`
   position: relative;
   cursor: pointer;
+  cursor: ${({ disabled }) => disabled && 'no-drop'};
 
   :before {
     content: '';

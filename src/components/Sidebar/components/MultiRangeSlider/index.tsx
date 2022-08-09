@@ -10,6 +10,7 @@ import {
 import { useFilterContext } from '@hooks/useFilterContext';
 
 import { Box } from '../Box';
+import { ButtonAccession, Test } from '../Checkbox/styles';
 import {
   ContentFilter,
   InputText,
@@ -104,7 +105,7 @@ export function RangeSlider(props: RangeProps) {
 }
 
 export function MultiRangeSlider(props: MultipleRangeProps) {
-  const { title, min, max, items, isLocked } = props;
+  const { title, min, max, items, isLocked, isAdmin } = props;
 
   const renderRangeSlider = (rangeSlider: RangeProps) => {
     const finalMin = rangeSlider.min || min;
@@ -124,7 +125,31 @@ export function MultiRangeSlider(props: MultipleRangeProps) {
 
   return (
     <Box label={title} isLocked={isLocked}>
-      <Content>{items.map(renderRangeSlider)}</Content>
+      <>
+        <Content>{items.map(renderRangeSlider)}</Content>
+        {!isAdmin && (
+          <Test>
+            <ButtonAccession
+              href="https://www.projetosalasebunb.com.br/adesao"
+              target="_blank"
+            >
+              <p>
+                <span>
+                  Os municípios terão acesso aos filtros por categoria na sua
+                  sala individual de gestão e governança.
+                </span>
+                <span>
+                  Venha participar do projeto! A adesão é <b>SEM CUSTOS</b> para
+                  o município.
+                </span>
+                <span>
+                  Faça sua adesão <b>clicando aqui</b>.
+                </span>
+              </p>
+            </ButtonAccession>
+          </Test>
+        )}
+      </>
     </Box>
   );
 }

@@ -58,6 +58,7 @@ export interface CommumProps {
   title: string;
   column: keyof FilterValues;
   isLocked?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface SelectProps extends CommumProps {
@@ -87,12 +88,14 @@ export interface MultipleRangeProps {
   min: number;
   items: RangeProps[];
   isLocked?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface MultipleSelectsProps {
   title: string;
   items: SelectProps[];
   isLocked?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface Filters {
