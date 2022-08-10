@@ -6,11 +6,12 @@ interface BoxProps {
   label: string;
   children: ReactChild;
   isLocked?: boolean;
+  isOpen?: boolean;
 }
 
 export function Box(props: BoxProps) {
-  const { children, label, isLocked } = props;
-  const [large, setLarge] = useState<boolean>(false);
+  const { children, label, isOpen, isLocked } = props;
+  const [large, setLarge] = useState<boolean>(!!isOpen);
 
   function handleSize() {
     setLarge((prev: boolean) => !prev);

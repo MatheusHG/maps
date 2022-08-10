@@ -96,6 +96,7 @@ export interface MultipleSelectsProps {
   items: SelectProps[];
   isLocked?: boolean;
   isAdmin?: boolean;
+  isOpen?: boolean;
 }
 
 export interface Filters {

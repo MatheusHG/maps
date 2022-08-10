@@ -1,11 +1,11 @@
 import qs from 'qs';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import { BiArrowFromRight } from 'react-icons/bi';
 
 import { getCities, getStates, IStates, ICities } from '@services/City/index';
 import FiltersService from '@services/Filters';
 
-import { Filters } from '@contexts/FilterContext/types';
+import { Filters, VALUE_TYPE } from '@contexts/FilterContext/types';
 
 import { useFilterContext } from '@hooks/useFilterContext';
 
@@ -24,6 +24,11 @@ export function SideBar() {
   const [cities, setCities] = useState<ICities[]>([]);
   const [isLocked, setIsLocked] = useState<boolean>(true);
 
+  const [isFirstRender, handleForceUpdate] = useReducer(
+    (prevState) => !prevState,
+    true,
+  );
+
   const {
     filterValues,
     forceUpdate,
@@ -32,6 +37,7 @@ export function SideBar() {
     setCities: setCitiess,
     clearFilters,
     setLocation,
+    onChangeFilterValue,
   } = useFilterContext();
 
   useEffect(() => {
@@ -102,7 +108,7 @@ export function SideBar() {
         setLocation({
           latitude: calcLat(normalizedCities),
           longitude: calcLong(normalizedCities) - 0.1,
-          zoom: 5,
+          zoom: 8,
         });
       }
 
@@ -122,6 +128,7 @@ export function SideBar() {
       setLocation({
         latitude: calcLat(response),
         longitude: calcLong(response) - 0.1,
+        zoom: 12,
       });
     }
     setMyLocation(false);
@@ -129,6 +136,20 @@ export function SideBar() {
     setCitiess([]);
     setSchools(response);
   }
+
+  useEffect(() => {
+    (async () => {
+      if (isFirstRender) {
+        onChangeFilterValue('codigo_uf', 'DF', VALUE_TYPE.SELECT);
+        onChangeFilterValue('municipio', 'Brasília', VALUE_TYPE.SELECT);
+        handleForceUpdate();
+        return;
+      }
+
+      await handleConfirmFilterValues();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFirstRender]);
 
   function handleClear() {
     clearFilters();
@@ -153,6 +174,7 @@ export function SideBar() {
         multipleSelects: [
           {
             title: 'Estado / Cidade',
+            isOpen: true,
             items: [
               {
                 placeholder: 'UF',
