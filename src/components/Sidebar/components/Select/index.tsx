@@ -74,10 +74,10 @@ export function Select(props: SelectProps) {
 }
 
 export function MultiSelect(props: MultipleSelectsProps) {
-  const { items, title, isLocked } = props;
+  const { items, title, isLocked, isOpen } = props;
 
   return (
-    <Box label={title} isLocked={isLocked}>
+    <Box isOpen={isOpen} label={title} isLocked={isLocked}>
       <Content>
         {items.map((item) => (
           <Select {...item} hasNoBox />
