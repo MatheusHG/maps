@@ -102,7 +102,7 @@ export function SideBar() {
         setLocation({
           latitude: calcLat(normalizedCities),
           longitude: calcLong(normalizedCities) - 0.1,
-          zoom: 5,
+          zoom: 8,
         });
       }
 
@@ -122,6 +122,7 @@ export function SideBar() {
       setLocation({
         latitude: calcLat(response),
         longitude: calcLong(response) - 0.1,
+        zoom: 12,
       });
     }
     setMyLocation(false);
