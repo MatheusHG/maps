@@ -13,7 +13,7 @@ import { Header } from './components/Header';
 import { Container, Content, CloseLabel } from './style';
 
 export function SideBar() {
-  const { allFilters, setAllFilters, setMyLocation, setPopupInfo } =
+  const { allFilters, setAllFilters, setMyLocation, setPopupInfo, setLoading } =
     useFilterContext();
 
   const access = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -91,6 +91,7 @@ export function SideBar() {
   }
 
   async function handleConfirmFilterValues() {
+    setLoading(true);
     setPopupInfo(null);
     if (filterValues.codigo_uf.value && !filterValues.municipio.value) {
       const response = await FiltersService.getCities(
@@ -137,6 +138,7 @@ export function SideBar() {
 
     setCitiess([]);
     setSchools(response);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -149,6 +151,7 @@ export function SideBar() {
       }
 
       await handleConfirmFilterValues();
+      setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFirstRender]);
@@ -167,6 +170,7 @@ export function SideBar() {
         setCities(citiesLocations);
       }
     })();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceUpdate, states, firstFilter]);
 

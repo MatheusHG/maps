@@ -70,6 +70,8 @@ interface FilterContextProps {
   setCities: (cities: CityProps[]) => void;
   location: Location;
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   myLocation: boolean;
   setMyLocation: React.Dispatch<React.SetStateAction<boolean>>;
   popupInfo: SchoolProps | CityProps | null;
@@ -107,6 +109,7 @@ function FilterProvider({ children }: FilterProviderProps) {
   const [cities, setCities] = useState<CityProps[]>([]);
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
   const [location, setLocation] = useState<Location>({} as Location);
+  const [loading, setLoading] = useState<boolean>(true);
   const [myLocation, setMyLocation] = useState<boolean>(true);
   const [popupInfo, setPopupInfo] = useState<SchoolProps | CityProps | null>(
     null,
@@ -200,6 +203,8 @@ function FilterProvider({ children }: FilterProviderProps) {
         setAllFilters,
         location,
         setLocation,
+        loading,
+        setLoading,
         myLocation,
         setMyLocation,
         popupInfo,
