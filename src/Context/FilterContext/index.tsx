@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable camelcase */
-import {
+import React, {
   createContext,
   Dispatch,
   DispatchWithoutAction,
@@ -72,6 +72,10 @@ interface FilterContextProps {
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
   myLocation: boolean;
   setMyLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  popupInfo: SchoolProps | CityProps | null;
+  setPopupInfo: React.Dispatch<
+    React.SetStateAction<SchoolProps | CityProps | null>
+  >;
   allFilters: FiltersMaps | any;
   setAllFilters: Dispatch<SetStateAction<FiltersMaps | undefined>>;
   clearFilters: () => void;
@@ -104,7 +108,9 @@ function FilterProvider({ children }: FilterProviderProps) {
   const [allFilters, setAllFilters] = useState<FiltersMaps>();
   const [location, setLocation] = useState<Location>({} as Location);
   const [myLocation, setMyLocation] = useState<boolean>(true);
-
+  const [popupInfo, setPopupInfo] = useState<SchoolProps | CityProps | null>(
+    null,
+  );
   // eslint-disable-next-line prettier/prettier
   const [filterValues, setFilterValues] = useState<FilterValues>(
     {} as FilterValues,
@@ -196,6 +202,8 @@ function FilterProvider({ children }: FilterProviderProps) {
         setLocation,
         myLocation,
         setMyLocation,
+        popupInfo,
+        setPopupInfo,
         clearFilters,
         filterValues,
         forceUpdate,

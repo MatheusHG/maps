@@ -13,7 +13,8 @@ import { Header } from './components/Header';
 import { Container, Content, CloseLabel } from './style';
 
 export function SideBar() {
-  const { allFilters, setAllFilters, setMyLocation } = useFilterContext();
+  const { allFilters, setAllFilters, setMyLocation, setPopupInfo } =
+    useFilterContext();
 
   const access = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const isAdmin = (Object.keys(access)[0] === 'admin') as boolean;
@@ -90,6 +91,7 @@ export function SideBar() {
   }
 
   async function handleConfirmFilterValues() {
+    setPopupInfo(null);
     if (filterValues.codigo_uf.value && !filterValues.municipio.value) {
       const response = await FiltersService.getCities(
         filterValues.codigo_uf.value,

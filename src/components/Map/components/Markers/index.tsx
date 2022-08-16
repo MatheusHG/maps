@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import FiltersService from '@services/Filters';
 
+import { useFilterContext } from '@hooks/useFilterContext';
+
 import AccessionModal from '@components/AccessionModal';
 
 import { CityPopup } from '../CityPopup';
@@ -15,6 +17,7 @@ interface Props {
 }
 
 export function Markers(props: Props) {
+  const { popupInfo, setPopupInfo } = useFilterContext();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const access = QueryString.parse(window.location.search, {
@@ -23,9 +26,6 @@ export function Markers(props: Props) {
   const isAdmin = (Object.keys(access)[0] === 'admin') as boolean;
 
   const { values, query } = props;
-  const [popupInfo, setPopupInfo] = useState<SchoolProps | CityProps | null>(
-    null,
-  );
 
   function clearPopupInfo() {
     setPopupInfo(null);
@@ -60,7 +60,6 @@ export function Markers(props: Props) {
 
   function getOnClick(value: CityProps | SchoolProps) {
     setPopupInfo(null);
-
     return query === 'school'
       ? (() => {
           const popupValue = value as SchoolProps;
