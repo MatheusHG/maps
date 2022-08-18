@@ -116,6 +116,7 @@ export function SideBar() {
       }
 
       setMyLocation(false);
+      setLoading(false);
 
       return;
     }
