@@ -6,5 +6,5 @@ export function formatNumber(number: number) {
   });
 }
 export function removeSpecialChars(string: string) {
-  return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/'/g, ' ').toLowerCase();
 }
